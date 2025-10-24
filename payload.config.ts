@@ -1,6 +1,6 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from "@payloadcms/db-postgres";
-
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
@@ -36,5 +36,16 @@ export default buildConfig({
   }),
   // database-adapter-config-end
   sharp,
-  plugins: [],
+  plugins: [
+    vercelBlobStorage({
+      // Vercel Blob-specific arguments go here.
+      // `readWriteToken` is required.
+      collections: {
+        media: true
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || "",
+      enabled: true,
+      clientUploads: true,
+    }),
+  ],
 });
