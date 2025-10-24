@@ -1,7 +1,21 @@
-import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  turbopack: {
+    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+  // Your Next.js config here
+  // experimental: {
+  //   reactCompiler: false,
+  // },
 };
 
-export default nextConfig;
+// Make sure you wrap your `nextConfig`
+// with the `withPayload` plugin
+export default withPayload(nextConfig);
