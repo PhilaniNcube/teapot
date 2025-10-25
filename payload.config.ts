@@ -25,7 +25,15 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Books, Blogs, Events, Stockists],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    // Lexical-specific arguments go here.
+    features({ defaultFeatures, rootFeatures, }) {
+      return [
+        ...defaultFeatures,
+        ...rootFeatures,
+      ];
+    },
+  }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
