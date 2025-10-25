@@ -1,32 +1,37 @@
-"use server"
+"use server";
+import { cacheTag, cacheLife } from "next/cache";
 
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getPayload } from "payload";
+import config from "@payload-config";
 
 export async function getBooks() {
+  "use cache";
 
-    const payload = await getPayload({
-        config,
-    });
+  cacheTag("books");
+  // This cache will revalidate after an hour even if no explicit
+  // revalidate instruction was received
+  cacheLife("days");
 
-    const booksData = await payload.find({
-       collection: "books",
-    });
+  const payload = await getPayload({
+    config,
+  });
 
-    return booksData;
+  const booksData = await payload.find({
+    collection: "books",
+  });
 
+  return booksData;
 }
 
 export async function getBookById(id: number) {
+  const payload = await getPayload({
+    config,
+  });
 
-    const payload = await getPayload({
-        config,
-    });
+  const bookData = await payload.findByID({
+    collection: "books",
+    id: id.toString(),
+  });
 
-    const bookData = await payload.findByID({
-        collection: "books",
-        id: id.toString(),
-    });
-
-    return bookData;
+  return bookData;
 }

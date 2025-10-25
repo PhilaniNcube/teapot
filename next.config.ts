@@ -1,7 +1,8 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig = {
-  images:{
+  cacheComponents: true,
+  images: {
     remotePatterns: [
       new URL("https://ikmbrpotgniwicz3.public.blob.vercel-storage.com/***"),
     ],

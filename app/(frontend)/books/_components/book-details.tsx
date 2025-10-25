@@ -5,12 +5,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Calendar, BookOpen, DollarSign, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Calendar, BookOpen } from 'lucide-react';
+
 import { convertLexicalNodesToJSX, defaultJSXConverters } from '@payloadcms/richtext-lexical/react';
 import { Book, Media } from '@/payload-types';
-import { formatPrice, getCoverImageUrl } from '@/lib/utils';
+import { formatPrice,  } from '@/lib/utils';
 import { format } from 'date-fns';
+import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 
 interface BookDetailsProps {
   id: number;
@@ -26,7 +27,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
 
 
   return (
-    <div className="space-y-8 py-20 lg:py-24" >
+    <div className="space-y-8" >
       {/* Back button */}
      
 
@@ -114,9 +115,13 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                     <Button size="lg" className="flex-1">
                       Buy Now
                     </Button>
-                    <Button variant="outline" size="lg" className="flex-1">
-                      Add to Cart
-                    </Button>
+                    <AddToCartButton 
+                      book={book} 
+                      size="lg" 
+                      variant="outline" 
+                      className="flex-1"
+                      showQuantityControls={false}
+                    />
                   </div>
                   
                  

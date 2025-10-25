@@ -7,6 +7,9 @@ import React from "react";
 import { formatPrice, getCoverImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+
+
 
 const BooksGrid = async () => {
   const booksData = await getBooks();
@@ -71,9 +74,16 @@ const BooksGrid = async () => {
                     <span className="text-xl font-semibold text-primary">
                       {formatPrice(book.price)}
                     </span>
-                    <Link href={`/books/${book.id}`}>
-                      <Button variant="outline">View Details</Button>
-                    </Link>
+                    <div className="flex gap-2">
+                      <Link href={`/books/${book.id}`}>
+                        <Button variant="outline" size="sm">View Details</Button>
+                      </Link>
+                      <AddToCartButton 
+                        book={book} 
+                        size="sm"
+                        showQuantityControls={false}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

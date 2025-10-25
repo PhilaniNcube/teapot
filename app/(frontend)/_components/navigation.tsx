@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { useState } from "react"
+import { CartIcon } from "@/components/cart/cart-icon"
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
@@ -30,6 +31,7 @@ export function Navigation() {
             <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
+            <CartIcon />
             <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
               Get the Book
             </Button>
