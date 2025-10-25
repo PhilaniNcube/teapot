@@ -24,6 +24,10 @@ export async function getBooks() {
 }
 
 export async function getBookById(id: number) {
+  "use cache";
+  cacheTag(`book-${id}`);
+  cacheLife("hours");
+
   const payload = await getPayload({
     config,
   });
