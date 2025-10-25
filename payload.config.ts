@@ -12,6 +12,7 @@ import { Media } from "./collections/Media";
 import { Books } from "./collections/Books";
 import { Blogs } from "./collections/Blogs";
 import { Events } from "./collections/Events";
+import { Stockists } from "./collections/Stockists";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Books, Blogs, Events],
+  collections: [Users, Media, Books, Blogs, Events, Stockists],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
