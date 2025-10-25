@@ -112,9 +112,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button size="lg" className="flex-1">
-                      Buy Now
-                    </Button>
+                   
                     <AddToCartButton 
                       book={book} 
                       size="lg" 

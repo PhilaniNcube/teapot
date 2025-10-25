@@ -32,7 +32,7 @@ export function CartIcon() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-lg">
+      <SheetContent className="w-full sm:max-w-lg px-4 py-3">
         <CartContent />
       </SheetContent>
     </Sheet>
