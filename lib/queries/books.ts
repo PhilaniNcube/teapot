@@ -16,3 +16,17 @@ export async function getBooks() {
     return booksData;
 
 }
+
+export async function getBookById(id: number) {
+
+    const payload = await getPayload({
+        config,
+    });
+
+    const bookData = await payload.findByID({
+        collection: "books",
+        id: id.toString(),
+    });
+
+    return bookData;
+}

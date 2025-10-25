@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { formatPrice, getCoverImageUrl } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 const BooksGrid = async () => {
   const booksData = await getBooks();
@@ -22,7 +23,7 @@ const BooksGrid = async () => {
               className="group overflow-hidden border-border/50 bg-card hover:border-primary/20 transition-all duration-300 hover:shadow-lg p-0 "
             >
               <div className="flex justify-between p-4">
-                <div className="relative overflow-hidden bg-muted">
+                <div className="relative overflow-hidden">
                   <Image
                     src={
                       getCoverImageUrl(book.coverImage) || "/placeholder.svg"
@@ -70,7 +71,9 @@ const BooksGrid = async () => {
                     <span className="text-xl font-semibold text-primary">
                       {formatPrice(book.price)}
                     </span>
-                    <Button variant="outline">View Details</Button>
+                    <Link href={`/books/${book.id}`}>
+                      <Button variant="outline">View Details</Button>
+                    </Link>
                   </div>
                 </div>
               </div>
