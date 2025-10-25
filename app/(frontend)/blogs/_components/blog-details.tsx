@@ -5,19 +5,12 @@ import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 
-interface BlogDetailsProps {
-  id: string;
-}
+export const BlogDetails = async ({ params }: {params:Promise<{id:string}>}) => {
 
-export const BlogDetails = async ({ id }: BlogDetailsProps) => {
-  let blog;
+  const { id } = await params;
   
-  try {
-    blog = await getBlogById(parseInt(id));
-  } catch (error) {
-    console.error("Error fetching blog:", error);
-    notFound();
-  }
+  const blog = await getBlogById(parseInt(id));
+  
   
   if (!blog) {
     notFound();

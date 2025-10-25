@@ -21,9 +21,8 @@ export async function getBlogs() {
 }
 
 export async function getBlogById(id: number) {
-  "use cache";
-  cacheTag(`blog-${id}`);
-  cacheLife("hours");
+
+
   const payload = await getPayload({
     config,
   });

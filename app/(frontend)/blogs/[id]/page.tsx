@@ -5,8 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { BlogDetails, BlogDetailsFallback } from "../_components";
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-
+ 
   return (
     <main className="py-24 lg:py-32">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -20,17 +19,14 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Button>
         </div>
 
-        {/* Blog details wrapped in Suspense */}
         <Suspense fallback={<BlogDetailsFallback />}>
-          <BlogDetails id={id} />
+          <BlogDetails params={params} />
         </Suspense>
 
         {/* Navigation */}
         <div className="mt-12 pt-8 border-t">
           <Button asChild>
-            <Link href="/blogs">
-              ← Back to All Blogs
-            </Link>
+            <Link href="/blogs">← Back to All Blogs</Link>
           </Button>
         </div>
       </div>
