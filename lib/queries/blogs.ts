@@ -5,6 +5,9 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 
 export async function getBlogs() {
+  "use cache";
+  cacheTag(`blog`);
+  cacheLife("hours");
 
   const payload = await getPayload({ config });
 
