@@ -15,6 +15,7 @@ type Args = {
 
 const serverFunction: ServerFunctionClient = async function (args) {
   "use server";
+
   return handleServerFunctions({
     ...args,
     config,
@@ -23,13 +24,15 @@ const serverFunction: ServerFunctionClient = async function (args) {
 };
 
 const Layout = ({ children }: Args) => (
-  <RootLayout
-    config={config}
-    importMap={importMap}
-    serverFunction={serverFunction}
-  >
-    <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-  </RootLayout>
+  <Suspense fallback={<div>Loading...</div>}>
+    <RootLayout
+      config={config}
+      importMap={importMap}
+      serverFunction={serverFunction}
+    >
+      {children}
+    </RootLayout>
+  </Suspense>
 );
 
 export default Layout;
