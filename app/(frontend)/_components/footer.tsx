@@ -75,7 +75,7 @@ export function Footer() {
             <Suspense>
               <CopyRightYear />
             </Suspense>
-            Barbara Townsend. All rights reserved.
+            {" "}Barbara Townsend. All rights reserved.
           </p>
         </div>
       </div>
