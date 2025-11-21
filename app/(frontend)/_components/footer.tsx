@@ -10,26 +10,12 @@ export function Footer() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
-            <h3 className=" font-bold text-2xl text-foreground mb-4">
-              Barbara Townsend
-            </h3>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              Self-published author crafting stories that inspire, challenge,
-              and transport readers to new worlds of imagination.
-            </p>
+           
             <div className="flex gap-3">
               <Button variant="outline" size="icon">
                 <Facebook className="w-5 h-5" />
               </Button>
-              <Button variant="outline" size="icon">
-                <Instagram className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Twitter className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Mail className="w-5 h-5" />
-              </Button>
+              
             </div>
           </div>
 

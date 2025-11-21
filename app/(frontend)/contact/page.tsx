@@ -17,8 +17,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              I&apos;d love to hear from you. Whether you have questions about my books, want to discuss a book club visit,
-              or just want to say hello.
+           I&apos;d love to hear your questions and comments about my books
             </p>
           </div>
 
@@ -98,43 +97,12 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm text-muted-foreground mb-1">Location</p>
-                      <p className="text-foreground">Available for virtual and in-person events</p>
-                    </div>
-                  </div>
+            
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="">Book Club Visits</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    I love connecting with readers! I&apos;m available for book club discussions, both virtual and in-person.
-                  </p>
-                  <Button variant="outline" className="w-full bg-transparent">
-                    Schedule a Visit
-                  </Button>
-                </CardContent>
-              </Card>
+        
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="">Speaking Events</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Interested in having me speak at your event? Let&apos;s discuss how I can contribute to your gathering.
-                  </p>
-                  <Button variant="outline" className="w-full bg-transparent">
-                    Inquire About Events
-                  </Button>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>

@@ -24,12 +24,12 @@ const BlogList = async () => {
       {blogs.map((blog) => (
         <Card key={blog.id} className="overflow-hidden transition-shadow hover:shadow-lg p-0">
           {blog.coverImage && typeof blog.coverImage === 'object' && (
-            <div className="relative h-48 w-full">
+            <div className="relative aspect-video w-full">
               <Image
                 src={blog.coverImage.url || ''}
                 alt={blog.coverImage.alt || blog.title}
                 fill
-                className="object-cover"
+                className="object-cover object-top aspect-video"
               />
             </div>
           )}
