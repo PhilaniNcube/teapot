@@ -39,6 +39,12 @@ export const Books: CollectionConfig = {
             name: 'price',
             type: 'number',
             required: true,
+        }, 
+        {
+            name: 'inStock',
+            type: 'checkbox',
+            label: 'In Stock',
+            defaultValue: true,
         }
     ],
 }
