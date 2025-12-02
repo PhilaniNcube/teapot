@@ -43,7 +43,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                       src={coverImage.url}
                       alt={coverImage.alt || book.title}
                       fill
-                      className="object-cover w-full"
+                      className="object-cover w-full object-top"
                       priority
                     />
                   ) : (
