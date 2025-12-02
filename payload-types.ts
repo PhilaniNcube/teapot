@@ -192,6 +192,7 @@ export interface Book {
     [k: string]: unknown;
   };
   price: number;
+  inStock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -393,6 +394,7 @@ export interface BooksSelect<T extends boolean = true> {
   coverImage?: T;
   description?: T;
   price?: T;
+  inStock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

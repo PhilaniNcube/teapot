@@ -19,6 +19,7 @@ interface BookDetailsProps {
 
 const BookDetails = async ({ id }: BookDetailsProps) => {
   const book: Book = await getBookById(id);
+  const isOutOfStock = book.inStock === false;
   
 
 
@@ -77,6 +78,11 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                
                   {formatPrice(book.price)}
                 </Badge>
+                {isOutOfStock && (
+                  <Badge variant="destructive" className="gap-1">
+                    Out of Stock
+                  </Badge>
+                )}
               </div>
             </div>
 
@@ -106,7 +112,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                         {formatPrice(book.price)}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Digital & Physical copies available
+                        {isOutOfStock ? 'Currently Out of Stock' : 'Digital & Physical copies available'}
                       </p>
                     </div>
                   </div>
@@ -119,6 +125,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                       variant="outline" 
                       className="flex-1"
                       showQuantityControls={false}
+                      disabled={isOutOfStock}
                     />
                   </div>
                   

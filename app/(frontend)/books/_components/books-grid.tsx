@@ -8,6 +8,7 @@ import { formatPrice, getCoverImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { Badge } from "@/components/ui/badge";
 
 
 
@@ -15,6 +16,7 @@ const BooksGrid = async () => {
   const booksData = await getBooks();
 
   const books = booksData?.docs || [];
+
 
   return (
     <div className="">
@@ -27,6 +29,11 @@ const BooksGrid = async () => {
             >
               <div className="flex justify-between p-4">
                 <div className="relative overflow-hidden">
+                  {book.inStock === false && (
+                    <Badge variant="destructive" className="absolute top-2 right-2 z-10">
+                      Out of Stock
+                    </Badge>
+                  )}
                   <Image
                     src={
                       getCoverImageUrl(book.coverImage) || "/placeholder.svg"
@@ -78,11 +85,17 @@ const BooksGrid = async () => {
                       <Link href={`/books/${book.id}`}>
                         <Button variant="outline" size="sm">View Details</Button>
                       </Link>
-                      <AddToCartButton 
-                        book={book} 
-                        size="sm"
-                        showQuantityControls={false}
-                      />
+                      {book.inStock !== false ? (
+                        <AddToCartButton 
+                          book={book} 
+                          size="sm"
+                          showQuantityControls={false}
+                        />
+                      ) : (
+                        <Button variant="destructive" size="sm" disabled>
+                          Out of Stock
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

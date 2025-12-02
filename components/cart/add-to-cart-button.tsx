@@ -12,6 +12,7 @@ interface AddToCartButtonProps {
   size?: 'default' | 'sm' | 'lg' | 'icon'
   showQuantityControls?: boolean
   className?: string
+  disabled?: boolean
 }
 
 export function AddToCartButton({ 
@@ -19,7 +20,8 @@ export function AddToCartButton({
   variant = 'default', 
   size = 'default',
   showQuantityControls = true,
-  className 
+  className,
+  disabled = false
 }: AddToCartButtonProps) {
   const { addItem, getItemQuantity, updateQuantity, isHydrated } = useCart()
   const [isAdding, setIsAdding] = useState(false)
@@ -92,7 +94,7 @@ export function AddToCartButton({
       size={size} 
       className={className}
       onClick={handleAddToCart}
-      disabled={isAdding}
+      disabled={disabled || isAdding}
     >
       {isAdding ? (
         <>
