@@ -12,6 +12,11 @@ const BooksPage = () => {
         <p className="text-muted-foreground">
           Explore the collection using container queries for responsive layout
         </p>
+        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
+          <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+            📦 Books are only available for sale and shipping within South Africa
+          </p>
+        </div>
       </div>
       <Suspense fallback={<BooksLoading />}>
         <BooksGrid />

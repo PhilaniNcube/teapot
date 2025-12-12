@@ -117,6 +117,12 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                     </div>
                   </div>
                   
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
+                    <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                      📦 Available for sale and shipping within South Africa only
+                    </p>
+                  </div>
+                  
                   <div className="flex flex-col sm:flex-row gap-3">
                    
                     <AddToCartButton 
