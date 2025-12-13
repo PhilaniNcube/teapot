@@ -4,7 +4,8 @@ import { useCart } from '@/lib/store/cart-provider'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ShoppingCart, Plus, Minus, X } from 'lucide-react'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet'
+import Link from 'next/link'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
 import { formatPrice } from '@/lib/utils'
@@ -148,9 +149,13 @@ function CartContent() {
           <span className="font-bold text-lg">{formatPrice(totalPrice)}</span>
         </div>
         
-        <Button className="w-full" size="lg">
-          Proceed to Checkout
-        </Button>
+        <SheetClose asChild>
+          <Button className="w-full" size="lg" asChild>
+            <Link href="/checkout">
+              Proceed to Checkout
+            </Link>
+          </Button>
+        </SheetClose>
       </div>
     </div>
   )

@@ -13,6 +13,7 @@ import { Books } from "./collections/Books";
 import { Blogs } from "./collections/Blogs";
 import { Events } from "./collections/Events";
 import { Stockists } from "./collections/Stockists";
+import { Orders } from "./collections/Orders";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Books, Blogs, Events, Stockists],
+  collections: [Users, Media, Books, Blogs, Events, Stockists, Orders],
   editor: lexicalEditor({
     // Lexical-specific arguments go here.
     features({ defaultFeatures, rootFeatures, }) {

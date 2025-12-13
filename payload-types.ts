@@ -73,6 +73,8 @@ export interface Config {
     blogs: Blog;
     events: Event;
     stockists: Stockist;
+    orders: Order;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +87,8 @@ export interface Config {
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     stockists: StockistsSelect<false> | StockistsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -92,6 +96,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: null;
   globals: {};
   globalsSelect: {};
   locale: null;
@@ -192,7 +197,7 @@ export interface Book {
     [k: string]: unknown;
   };
   price: number;
-  inStock?: boolean | null;
+  inStock: boolean;
   updatedAt: string;
   createdAt: string;
 }
@@ -270,6 +275,63 @@ export interface Stockist {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  /**
+   * Linked user account (optional)
+   */
+  orderedBy?: (number | null) | User;
+  items: {
+    book: number | Book;
+    quantity: number;
+    price: number;
+    id?: string | null;
+  }[];
+  /**
+   * Total value of the order including shipping
+   */
+  total: number;
+  status: 'pending' | 'shipped' | 'delivered' | 'cancelled';
+  shippingMethod: 'pargo' | 'pep';
+  /**
+   * The specific PEP store or Pargo point selected by the user
+   */
+  collectionPoint: string;
+  shippingCost: number;
+  customerDetails: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    province: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: number;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -298,6 +360,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'stockists';
         value: number | Stockist;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -438,6 +504,48 @@ export interface StockistsSelect<T extends boolean = true> {
   address?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderedBy?: T;
+  items?:
+    | T
+    | {
+        book?: T;
+        quantity?: T;
+        price?: T;
+        id?: T;
+      };
+  total?: T;
+  status?: T;
+  shippingMethod?: T;
+  collectionPoint?: T;
+  shippingCost?: T;
+  customerDetails?:
+    | T
+    | {
+        firstName?: T;
+        lastName?: T;
+        email?: T;
+        phone?: T;
+        address?: T;
+        city?: T;
+        postalCode?: T;
+        province?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
