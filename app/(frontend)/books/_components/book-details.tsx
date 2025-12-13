@@ -112,7 +112,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
                         {formatPrice(book.price)}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {isOutOfStock ? 'Currently Out of Stock' : 'Digital & Physical copies available'}
+                        {isOutOfStock ? 'Currently Out of Stock' : ''}
                       </p>
                     </div>
                   </div>
