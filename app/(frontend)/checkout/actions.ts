@@ -4,62 +4,39 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { CartItem } from '@/lib/store/cart-store'
 
+import { CheckoutSchema, checkoutSchema } from '@/lib/validators/checkout'
+
 export type OrderState = {
   success?: boolean
   error?: string
   orderId?: string
-}
-
-type CustomerDetails = {
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    address: string
-    city: string
-    postalCode: string
-    province: string
+  errors?: Record<string, string[]>
 }
 
 export async function createOrder(
   prevState: OrderState,
-  formData: FormData
+  data: CheckoutSchema
 ): Promise<OrderState> {
   try {
     const payload = await getPayload({ config })
     
-    const customerDetails: CustomerDetails = {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      address: formData.get('address') as string,
-      city: formData.get('city') as string,
-      postalCode: formData.get('postalCode') as string,
-      province: formData.get('province') as string,
+    // Validate with Zod
+    const validatedFields = checkoutSchema.safeParse(data)
+
+    if (!validatedFields.success) {
+      return {
+        error: 'Please fix the errors in the form',
+        errors: validatedFields.error.flatten().fieldErrors
+      }
     }
 
-    const shippingMethod = formData.get('shippingMethod') as 'pargo' | 'pep'
-    const collectionPoint = formData.get('collectionPoint') as string
-    const cartItemsJson = formData.get('cartItems') as string
-    
-    if (!cartItemsJson) {
-        return { error: 'Cart is empty' }
-    }
+    const { 
+      firstName, lastName, email, phone, address, city, postalCode, province,
+      shippingMethod, collectionPoint, cartItems 
+    } = validatedFields.data
 
-    const cartItems: CartItem[] = JSON.parse(cartItemsJson)
-
-    if (cartItems.length === 0) {
-      return { error: 'Cart is empty' }
-    }
-
-    // validate required fields
-    if (!customerDetails.firstName || !customerDetails.lastName || !customerDetails.email) {
-        return { error: 'Missing required fields' }
-    }
-    
-    if (!collectionPoint) {
-      return { error: 'Please specify a collection point' }
+    const customerDetails = {
+      firstName, lastName, email, phone, address, city, postalCode, province
     }
 
     let shippingCost = 0
