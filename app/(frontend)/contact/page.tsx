@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ContactForm } from "./_components/contact-form"
 import { Mail, Phone } from "lucide-react"
 import Link from "next/link"
+import { Suspense } from "react"
 
 export default function ContactPage() {
   return (
@@ -29,7 +30,10 @@ export default function ContactPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+              <Suspense>
 <ContactForm />
+                </Suspense>    
+
                 </CardContent>
               </Card>
             </div>
