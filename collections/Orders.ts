@@ -1,10 +1,14 @@
 import type { CollectionConfig } from 'payload'
+import { sendOrderEmail } from './hooks/send-order-email'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
   labels: {
     singular: 'Order',
     plural: 'Orders',
+  },
+  hooks: {
+    afterChange: [sendOrderEmail],
   },
   admin: {
     useAsTitle: 'id',
@@ -68,8 +72,8 @@ export const Orders: CollectionConfig = {
         name: 'shippingMethod',
         type: 'select',
         options: [
-            { label: 'Pargo (R100)', value: 'pargo' },
-            { label: 'PEP Store (R80)', value: 'pep' },
+            { label: 'PEP Store (7-9 days) - R60', value: 'pep_standard' },
+            { label: 'PEP Store (3-5 days) - R120', value: 'pep_express' },
         ],
         required: true,
     },
@@ -79,7 +83,7 @@ export const Orders: CollectionConfig = {
         label: 'Collection Point / Store',
         required: true,
         admin: {
-            description: 'The specific PEP store or Pargo point selected by the user',
+            description: 'The specific PEP store selected by the user',
         },
     },
     {

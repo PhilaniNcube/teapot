@@ -16,7 +16,7 @@ export const checkoutSchema = z.object({
   city: z.string().min(2, 'City is required'),
   postalCode: z.string().min(4, 'Postal code is required'),
   province: z.string().min(2, 'Province is required'),
-  shippingMethod: z.enum(['pargo', 'pep']),
+  shippingMethod: z.enum(['pep_standard', 'pep_express']),
   collectionPoint: z.string().min(2, 'Please specify a collection point'),
   cartItems: z.array(cartItemSchema).min(1, 'Cart is empty'),
 })

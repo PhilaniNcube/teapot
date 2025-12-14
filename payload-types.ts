@@ -294,9 +294,9 @@ export interface Order {
    */
   total: number;
   status: 'pending' | 'shipped' | 'delivered' | 'cancelled';
-  shippingMethod: 'pargo' | 'pep';
+  shippingMethod: 'pep_standard' | 'pep_express';
   /**
-   * The specific PEP store or Pargo point selected by the user
+   * The specific PEP store selected by the user
    */
   collectionPoint: string;
   shippingCost: number;

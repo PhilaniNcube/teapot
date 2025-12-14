@@ -41,7 +41,7 @@ export default function CheckoutPage() {
       city: '',
       postalCode: '',
       province: '',
-      shippingMethod: 'pargo',
+      shippingMethod: 'pep_standard',
       collectionPoint: '',
       cartItems: [],
     },
@@ -49,7 +49,7 @@ export default function CheckoutPage() {
 
   // Watch for dynamic updates
   const shippingMethod = form.watch('shippingMethod')
-  const shippingCost = shippingMethod === 'pargo' ? 100 : 80
+  const shippingCost = shippingMethod === 'pep_express' ? 120 : 60
   const finalTotal = totalPrice + shippingCost
 
   // Sync cart items to form
@@ -279,26 +279,26 @@ export default function CheckoutPage() {
                           >
                             <FormItem className="flex items-center space-x-2 border p-4 rounded-md cursor-pointer hover:bg-muted/50 transition-colors space-y-0">
                               <FormControl>
-                                <RadioGroupItem value="pargo" />
+                                <RadioGroupItem value="pep_standard" />
                               </FormControl>
                               <FormLabel className="flex flex-1 items-start justify-between cursor-pointer font-normal m-0">
                                 <div className="flex flex-col space-y-1">
-                                  <span className="font-medium">Pargo</span>
-                                  <span className="text-xs text-muted-foreground">Collect from over 3,000 pickup points nationwide.</span>
+                                  <span className="font-medium">PEP Store (Standard)</span>
+                                  <span className="text-xs text-muted-foreground">7-9 Days Delivery. Collect from your nearest PEP store.</span>
                                 </div>
-                                <span className="font-bold">{formatPrice(100)}</span>
+                                <span className="font-bold">{formatPrice(60)}</span>
                               </FormLabel>
                             </FormItem>
                             <FormItem className="flex items-center space-x-2 border p-4 rounded-md cursor-pointer hover:bg-muted/50 transition-colors space-y-0">
                               <FormControl>
-                                <RadioGroupItem value="pep" />
+                                <RadioGroupItem value="pep_express" />
                               </FormControl>
                               <FormLabel className="flex flex-1 items-start justify-between cursor-pointer font-normal m-0">
                                 <div className="flex flex-col space-y-1">
-                                  <span className="font-medium">PEP Store</span>
-                                  <span className="text-xs text-muted-foreground">Collect from your nearest PEP store.</span>
+                                  <span className="font-medium">PEP Store (Express)</span>
+                                  <span className="text-xs text-muted-foreground">3-5 Days Delivery. Collect from your nearest PEP store.</span>
                                 </div>
-                                <span className="font-bold">{formatPrice(80)}</span>
+                                <span className="font-bold">{formatPrice(120)}</span>
                               </FormLabel>
                             </FormItem>
                           </RadioGroup>
@@ -315,13 +315,14 @@ export default function CheckoutPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            {shippingMethod === 'pargo' ? 'Nearest Pargo Collection Point' : 'Nearest PEP Store'}
+                            Nearest PEP Store
                           </FormLabel>
                           <FormControl>
                              <Input 
-                              placeholder={shippingMethod === 'pargo' ? 'e.g. Clicks Gardens Center' : 'e.g. PEP Gardens Center'} 
+                              placeholder="e.g. PEP Gardens Center"
                               {...field} 
                             />
+
                           </FormControl>
                           <FormMessage />
                         </FormItem>

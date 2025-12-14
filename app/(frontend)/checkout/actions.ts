@@ -40,8 +40,8 @@ export async function createOrder(
     }
 
     let shippingCost = 0
-    if (shippingMethod === 'pargo') shippingCost = 100
-    if (shippingMethod === 'pep') shippingCost = 80
+    if (shippingMethod === 'pep_standard') shippingCost = 60
+    if (shippingMethod === 'pep_express') shippingCost = 120
 
     const itemsTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)
     const total = itemsTotal + shippingCost
