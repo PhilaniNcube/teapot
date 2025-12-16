@@ -8,8 +8,7 @@ const BlogsPage = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">Our Blog</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover our latest insights, stories, and updates from the world of
-            tea and beyond.
+          Discover our latest insights, stories and updates
           </p>
         </div>
         <Suspense fallback={<BlogListFallback />}>

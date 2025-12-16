@@ -1,14 +1,20 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
-import { useState } from "react"
-import { CartIcon } from "@/components/cart/cart-icon"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { useState } from "react";
+import { CartIcon } from "@/components/cart/cart-icon";
 
 export function Navigation() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
@@ -19,28 +25,52 @@ export function Navigation() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/books" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/books"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Books
             </Link>
-            <Link href="/blogs" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/blogs"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Blog
             </Link>
-            <Link href="/stockists" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/stockists"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Stockists
             </Link>
-            <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/about"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               About
             </Link>
-            <Link href="/press" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/press"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Press & Reviews
             </Link>
-            <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/contact"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Contact
             </Link>
-            <CartIcon />
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Get the Book
-            </Button>
+
+            {/* <CartIcon /> */}
+            <Link href="/books">
+              <Button
+                size="sm"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Get the Book
+              </Button>
+            </Link>
           </div>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -50,7 +80,10 @@ export function Navigation() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] px-8 py-6">
+            <SheetContent
+              side="right"
+              className="w-[300px] sm:w-[400px] px-8 py-6"
+            >
               <SheetHeader>
                 <SheetTitle className=" text-left">Menu</SheetTitle>
               </SheetHeader>
@@ -97,17 +130,19 @@ export function Navigation() {
                 >
                   Contact
                 </Link>
-                <Button
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 w-full"
-                  onClick={() => setOpen(false)}
-                >
-                  Get the Book
-                </Button>
+                <Link href="/books" onClick={() => setOpen(false)}>
+                  <Button
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 w-full"
+                    onClick={() => setOpen(false)}
+                  >
+                    Get the Book
+                  </Button>
+                </Link>
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
     </nav>
-  )
+  );
 }

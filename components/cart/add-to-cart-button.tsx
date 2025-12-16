@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ShoppingCart, Check, Plus, Minus } from 'lucide-react'
 import { Book } from '@/payload-types'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface AddToCartButtonProps {
   book: Book
@@ -24,6 +25,7 @@ export function AddToCartButton({
   disabled = false
 }: AddToCartButtonProps) {
   const { addItem, getItemQuantity, updateQuantity, isHydrated } = useCart()
+  const router = useRouter()
   const [isAdding, setIsAdding] = useState(false)
   const [quantity, setQuantity] = useState(0)
 
@@ -40,9 +42,10 @@ export function AddToCartButton({
     setIsAdding(true)
     addItem(book)
     
-    // Brief loading state for better UX
+    // Brief loading state for better UX, then redirect to checkout
     setTimeout(() => {
       setIsAdding(false)
+      router.push('/checkout')
     }, 500)
   }
 
