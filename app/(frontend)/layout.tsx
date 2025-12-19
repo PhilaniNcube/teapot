@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Teapot Publishing",
   description: "Self Publishing space for the author Barbara Townsend",
+  icons: {
+    icon: "/images/teapot.jpg",
+  },
 };
 
 export default function RootLayout({

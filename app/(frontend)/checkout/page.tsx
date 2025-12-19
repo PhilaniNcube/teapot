@@ -88,7 +88,7 @@ export default function CheckoutPage() {
 
   if (state.success) {
     return (
-      <div className="container mx-auto py-10 px-4 min-h-[60vh] flex flex-col items-center justify-center text-center max-w-md">
+      <div className="container mx-auto py-20 px-4 min-h-[60vh] flex flex-col items-center justify-center text-center max-w-md">
         <div className="bg-primary/10 p-6 rounded-full mb-6">
           <svg
             className="w-12 h-12 text-primary"
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="container mx-auto py-10 px-4 text-center">
+      <div className="container mx-auto py-20 px-4 text-center">
         <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
         <p className="text-muted-foreground mb-8">Add some books to your cart to proceed to checkout.</p>
         <Button asChild>
@@ -129,7 +129,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
+    <div className="container mx-auto py-20 px-4">
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
       
       <Form {...form}>

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Link } from "lucide-react";
 
 export function Hero() {
   return (
     <section className="flex flex-col w-full">
+        <h1 className="text-center text-2xl md:text-3xl font-semibold pt-24 uppercase">Welcome</h1>
       {/* Top Banner */}
       <div className="relative w-[70%] mx-auto h-[40vh] min-h-[300px] lg:h-[50vh]">
         <Image
@@ -39,6 +40,7 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Link href="/books">
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 group"
@@ -46,6 +48,7 @@ export function Hero() {
                 Order Now
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
+              </Link>
             </div>
           </div>
 

@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Facebook } from "lucide-react";
 import { useState } from "react";
 import { CartIcon } from "@/components/cart/cart-icon";
 
@@ -43,12 +43,12 @@ export function Navigation() {
             >
               Stockists
             </Link>
-            <Link
+            {/* <Link
               href="/about"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               About
-            </Link>
+            </Link> */}
             <Link
               href="/press"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -70,6 +70,15 @@ export function Navigation() {
               >
                 Get the Book
               </Button>
+            </Link>
+            <Link
+              href="https://www.facebook.com/barbara.townsend.7334504"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Facebook className="h-5 w-5" />
+              <span className="sr-only">Facebook</span>
             </Link>
           </div>
 
@@ -109,13 +118,13 @@ export function Navigation() {
                 >
                   Stockists
                 </Link>
-                <Link
+                {/* <Link
                   href="/about"
                   className="text-lg text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => setOpen(false)}
                 >
                   About
-                </Link>
+                </Link> */}
                 <Link
                   href="/press"
                   className="text-lg text-muted-foreground hover:text-foreground transition-colors"
@@ -137,6 +146,16 @@ export function Navigation() {
                   >
                     Get the Book
                   </Button>
+                </Link>
+                <Link
+                  href="https://www.facebook.com/barbara.townsend.7334504"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => setOpen(false)}
+                >
+                  <Facebook className="h-5 w-5" />
+                  <span>Facebook</span>
                 </Link>
               </div>
             </SheetContent>
