@@ -5,9 +5,9 @@ import { ArrowRight, Link } from "lucide-react";
 export function Hero() {
   return (
     <section className="flex flex-col w-full">
-        <h1 className="text-center text-2xl md:text-3xl font-semibold pt-24 uppercase">Welcome</h1>
+        <h1 className="text-center text-3xl md:text-5xl lg:text-6xl font-extrabold pt-24 uppercase">Welcome</h1>
       {/* Top Banner */}
-      <div className="relative w-[70%] mx-auto h-[40vh] min-h-[300px] lg:h-[50vh]">
+      <div className="relative w-full mx-auto h-[40vh] min-h-[300px] lg:h-[50vh]">
         <Image
           src="/images/banner-1.jpg"
           alt="Banner"
