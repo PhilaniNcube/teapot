@@ -20,5 +20,13 @@ export const Stockists: CollectionConfig = {
             type: "text",
             required: true,
         },
+        {
+            name: 'contact',
+            type: 'text',
+        }, 
+        {
+            name: 'email',
+            type: 'email',
+        }
     ],
 }

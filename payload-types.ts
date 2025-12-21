@@ -270,6 +270,8 @@ export interface Stockist {
   id: number;
   name: string;
   address: string;
+  contact?: string | null;
+  email?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -502,6 +504,8 @@ export interface EventsSelect<T extends boolean = true> {
 export interface StockistsSelect<T extends boolean = true> {
   name?: T;
   address?: T;
+  contact?: T;
+  email?: T;
   updatedAt?: T;
   createdAt?: T;
 }
