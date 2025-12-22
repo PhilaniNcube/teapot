@@ -55,7 +55,7 @@ export function GalleryGrid({ gallery }: GalleryGridProps) {
       </div>
 
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 overflow-hidden ">
+        <DialogContent className="max-w-[95vw] max-h-[94vh] p-0 overflow-hidden ">
             <DialogTitle className="sr-only">Gallery Image</DialogTitle>
         
           {selectedImage && (
