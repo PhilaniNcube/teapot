@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Quote } from "lucide-react"
 
@@ -12,6 +13,43 @@ const PressPage = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               What critics and readers are saying about Barbara Townsend&apos;s work.
             </p>
+          </div>
+
+          {/* Review Images Section */}
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-muted transition-all hover:shadow-lg">
+              <CardContent className="p-4">
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src="/images/reviews.jpeg"
+                    alt="The Village News review of The Colour of Flying by Barbara Townsend"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground mt-4 text-center">
+                  Review in The Village News
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-muted transition-all hover:shadow-lg">
+              <CardContent className="p-4">
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src="/images/reviews_2.jpeg"
+                    alt="Book launch event - Barbara Townsend with The Colour of Flying"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground mt-4 text-center">
+                  Book launch at Kleinmond Central
+                </p>
+              </CardContent>
+            </Card>
           </div>
           
           <div className="grid gap-8">
