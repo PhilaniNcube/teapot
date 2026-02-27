@@ -46,12 +46,12 @@ export function Navigation() {
             >
               Books
             </Link>
-            <Link
+            {/* <Link
               href='/events'
               className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Events
-            </Link>
+            </Link> */}
             <Link
               href='/blogs'
               className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
@@ -100,13 +100,13 @@ export function Navigation() {
                 >
                   Books
                 </Link>
-                <Link
+                {/* <Link
                   href='/events'
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'
                   onClick={() => setOpen(false)}
                 >
                   Events
-                </Link>
+                </Link> */}
                 <Link
                   href='/blogs'
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'
