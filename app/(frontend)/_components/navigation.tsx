@@ -23,7 +23,7 @@ export function Navigation() {
           <Link href='/' className='flex items-center gap-4'>
             <div className='relative w-16 h-16 rounded-full overflow-hidden'>
               <Image
-                src='/images/teapot.jpg'
+                src='/images/yellow_teapot.webp'
                 alt='Teapot Publishing Logo'
                 fill
                 className='object-cover'
