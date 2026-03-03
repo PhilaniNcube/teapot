@@ -24,7 +24,7 @@ export async function Hero() {
 
       {/* Books Grid */}
       <div className='container mx-auto px-4 lg:px-8 py-10'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-7xl mx-auto'>
           {books.map((book) => {
             const coverUrl = getCoverImageUrl(book.coverImage);
             const coverWidth =
@@ -38,7 +38,7 @@ export async function Hero() {
 
             return (
               <div key={book.id} className='flex flex-col items-center text-center gap-4'>
-                <div className='relative w-full max-w-[220px] shadow-lg'>
+                <div className='relative w-full max-w-[280px] shadow-lg'>
                   <Image
                     src={coverUrl || '/placeholder.svg'}
                     alt={book.title}
