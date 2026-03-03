@@ -1,13 +1,11 @@
 import { getBlogs } from "@/lib/queries/blogs";
-import React from "react";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
@@ -26,12 +24,12 @@ const BlogList = async () => {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
       {blogs.map((blog) => (
         <Link href={`/blogs/${blog.id}`} key={blog.id} passHref>
           <Card
       
-            className="overflow-hidden transition-shadow hover:shadow-lg px-0 py-3.5"
+            className="overflow-hidden transition-shadow hover:shadow-lg px-0 py-0"
           >
             {blog.coverImage && typeof blog.coverImage === "object" && (
               <div className="relative aspect-video w-full">
@@ -43,9 +41,9 @@ const BlogList = async () => {
                 />
               </div>
             )}
-            <CardHeader>
+            <CardHeader className="pb-5.5">
               <CardTitle className="line-clamp-2 hover:text-primary transition-colors">
-                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+                <p >{blog.title}</p>
               </CardTitle>
               <CardDescription>
                 {blog.createdAt && formatDate(blog.createdAt)}

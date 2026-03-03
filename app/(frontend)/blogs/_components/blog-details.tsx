@@ -3,7 +3,7 @@ import { getBlogById } from "@/lib/queries/blogs";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
-import { RichText } from "@payloadcms/richtext-lexical/react";
+import { RichText } from "@/components/richtext";
 
 export const BlogDetails = async ({ params }: {params:Promise<{id:string}>}) => {
 

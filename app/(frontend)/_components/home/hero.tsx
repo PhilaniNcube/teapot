@@ -10,10 +10,21 @@ export async function Hero() {
 
   return (
     <section className='flex flex-col w-full'>
-      {/* Welcome Heading */}
-      <h1 className='text-center text-3xl md:text-4xl lg:text-5xl font-extrabold pt-24 pb-2 uppercase tracking-tight'>
-        Welcome
-      </h1>
+      {/* Welcome Heading with teapot */}
+      <div className='flex flex-col items-center pt-24 pb-2'>
+        <div className='relative w-28 h-28 md:w-36 md:h-36 mb-4'>
+          <Image
+            src='/images/yellow_teapot.webp'
+            alt='Teapot Publishing'
+            fill
+            className='object-contain'
+            priority
+          />
+        </div>
+        <h1 className='text-center text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight'>
+          Welcome
+        </h1>
+      </div>
 
       {/* Quote Banner */}
       <div className='w-full bg-[#c9a227] py-4 px-6 my-4'>
@@ -38,7 +49,7 @@ export async function Hero() {
 
             return (
               <div key={book.id} className='flex flex-col items-center text-center gap-4'>
-                <div className='relative w-full max-w-[280px] shadow-lg'>
+                <div className='relative w-full max-w-[280px] shadow-lg bg-[#f5e6c8] p-4 rounded-sm'>
                   <Image
                     src={coverUrl || '/placeholder.svg'}
                     alt={book.title}

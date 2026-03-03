@@ -102,9 +102,7 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -153,6 +151,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -244,7 +243,9 @@ export interface Event {
   title: string;
   date: string;
   time: string;
+  venue: string;
   location: string;
+  eventType: 'book-signing' | 'book-launch' | 'reading' | 'talk' | 'festival' | 'workshop' | 'other';
   description: {
     root: {
       type: string;
@@ -261,6 +262,7 @@ export interface Event {
     [k: string]: unknown;
   };
   image?: (number | null) | Media;
+  status: 'upcoming' | 'cancelled' | 'completed';
   updatedAt: string;
   createdAt: string;
 }
@@ -271,6 +273,10 @@ export interface Event {
 export interface Stockist {
   id: number;
   name: string;
+  /**
+   * The town or city where the stockist is located (e.g. Cape Town, Grabouw)
+   */
+  town: string;
   address: string;
   contact?: string | null;
   email?: string | null;
@@ -516,9 +522,12 @@ export interface EventsSelect<T extends boolean = true> {
   title?: T;
   date?: T;
   time?: T;
+  venue?: T;
   location?: T;
+  eventType?: T;
   description?: T;
   image?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -528,6 +537,7 @@ export interface EventsSelect<T extends boolean = true> {
  */
 export interface StockistsSelect<T extends boolean = true> {
   name?: T;
+  town?: T;
   address?: T;
   contact?: T;
   email?: T;

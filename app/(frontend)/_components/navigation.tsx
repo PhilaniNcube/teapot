@@ -17,7 +17,7 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border'>
+    <nav className='fixed top-0 left-0 right-0 z-50 bg-[#fefce8]/95 backdrop-blur-sm border-b border-border'>
       <div className='container mx-auto px-4 lg:px-8'>
         <div className='flex items-center justify-between h-24'>
           <Link href='/' className='flex items-center gap-4'>
@@ -46,12 +46,12 @@ export function Navigation() {
             >
               Books
             </Link>
-            {/* <Link
+            <Link
               href='/events'
               className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Events
-            </Link> */}
+            </Link>
             <Link
               href='/blogs'
               className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
@@ -100,13 +100,13 @@ export function Navigation() {
                 >
                   Books
                 </Link>
-                {/* <Link
+                <Link
                   href='/events'
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'
                   onClick={() => setOpen(false)}
                 >
                   Events
-                </Link> */}
+                </Link>
                 <Link
                   href='/blogs'
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'

@@ -1,12 +1,17 @@
 import type { CollectionConfig } from "payload";
 
+
 export const Blogs: CollectionConfig = {
   slug: "blogs",
   labels: {
     singular: "Blog",
     plural: "Blogs",
   },
+  admin: {
+    useAsTitle: "title",
+  },
   fields: [
+   
     {
       name: "title",
       label: "Title",
@@ -40,3 +45,4 @@ export const Blogs: CollectionConfig = {
     },
   ],
 };
+

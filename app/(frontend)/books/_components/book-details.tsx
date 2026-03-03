@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Calendar, BookOpen } from 'lucide-react';
 
-import { convertLexicalNodesToJSX, defaultJSXConverters } from '@payloadcms/richtext-lexical/react';
+import { RichText } from '@/components/richtext';
 import { Book, Media } from '@/payload-types';
 import { formatPrice,  } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -93,11 +93,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
               </CardHeader>
               <CardContent>
                 <div className="prose prose-sm max-w-none dark:prose-invert">
-                  {convertLexicalNodesToJSX({ 
-                    converters: defaultJSXConverters,
-                    nodes: book.description.root.children,
-                    parent: book.description.root
-                  })}
+                  <RichText data={book.description} />
                 </div>
               </CardContent>
             </Card>

@@ -16,6 +16,14 @@ export const Stockists: CollectionConfig = {
             required: true,
         },
         {
+            name: "town",
+            type: "text",
+            required: true,
+            admin: {
+                description: "The town or city where the stockist is located (e.g. Cape Town, Grabouw)",
+            },
+        },
+        {
             name: "address",
             type: "text",
             required: true,

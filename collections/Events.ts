@@ -6,30 +6,85 @@ export const Events: CollectionConfig = {
     singular: "Event",
     plural: "Events",
   },
+  admin: {
+    useAsTitle: "title",
+    defaultColumns: ["title", "date", "venue", "eventType", "status"],
+  },
   fields: [
     {
       name: "title",
-      label: "Title",
+      label: "Event Title",
       type: "text",
       required: true,
     },
     {
-      name: "date",
-      label: "Date",
-      type: "date",
-      required: true,
+      type: "row",
+      fields: [
+        {
+          name: "date",
+          label: "Date",
+          type: "date",
+          required: true,
+          admin: {
+            width: "50%",
+            date: {
+              pickerAppearance: "dayOnly",
+              displayFormat: "d MMM yyyy",
+            },
+          },
+        },
+        {
+          name: "time",
+          label: "Time",
+          type: "text",
+          required: true,
+          admin: {
+            width: "50%",
+            placeholder: "e.g. 10:00 AM – 2:00 PM",
+          },
+        },
+      ],
     },
     {
-        name: "time",
-        label: "Time",
-        type: "text",
-        required: true,
+      type: "row",
+      fields: [
+        {
+          name: "venue",
+          label: "Venue",
+          type: "text",
+          required: true,
+          admin: {
+            width: "50%",
+            placeholder: "e.g. Exclusive Books, V&A Waterfront",
+          },
+        },
+        {
+          name: "location",
+          label: "City / Area",
+          type: "text",
+          required: true,
+          admin: {
+            width: "50%",
+            placeholder: "e.g. Cape Town",
+          },
+        },
+      ],
     },
     {
-      name: "location",
-      label: "Location",
-      type: "text",
+      name: "eventType",
+      label: "Type of Event",
+      type: "select",
       required: true,
+      defaultValue: "book-signing",
+      options: [
+        { label: "Book Signing", value: "book-signing" },
+        { label: "Book Launch", value: "book-launch" },
+        { label: "Reading", value: "reading" },
+        { label: "Talk / Lecture", value: "talk" },
+        { label: "Festival", value: "festival" },
+        { label: "Workshop", value: "workshop" },
+        { label: "Other", value: "other" },
+      ],
     },
     {
       name: "description",
@@ -43,6 +98,21 @@ export const Events: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       required: false,
+    },
+    {
+      name: "status",
+      label: "Event Status",
+      type: "select",
+      defaultValue: "upcoming",
+      required: true,
+      options: [
+        { label: "Upcoming", value: "upcoming" },
+        { label: "Cancelled", value: "cancelled" },
+        { label: "Completed", value: "completed" },
+      ],
+      admin: {
+        position: "sidebar",
+      },
     },
   ],
 };
