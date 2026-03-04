@@ -30,7 +30,7 @@ export function Navigation() {
               />
             </div>
             <div className='flex flex-col'>
-              <span className='text-xl md:text-2xl font-serif font-bold text-blue-600 uppercase tracking-wide'>
+              <span className='text-xl md:text-2xl font-serif font-bold text-[#1d467e] uppercase tracking-wide'>
                 Teapot Publishing
               </span>
               <span className='text-xs md:text-sm font-serif text-foreground font-medium'>
