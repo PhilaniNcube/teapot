@@ -182,6 +182,7 @@ export interface Book {
   pages: number;
   publishedDate: string;
   coverImage: number | Media;
+  shortDescription?: string | null;
   description: {
     root: {
       type: string;
@@ -491,6 +492,7 @@ export interface BooksSelect<T extends boolean = true> {
   pages?: T;
   publishedDate?: T;
   coverImage?: T;
+  shortDescription?: T;
   description?: T;
   price?: T;
   inStock?: T;

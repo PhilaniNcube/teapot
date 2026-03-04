@@ -30,6 +30,12 @@ export const Books: CollectionConfig = {
             required: true,
         },
         {
+            name: 'shortDescription',
+            label: 'Short Description',
+            type: 'text',
+            required: false,
+        },
+        {
             name: 'description',
             label: 'Description',
             type: "richText",

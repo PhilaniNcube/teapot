@@ -9,14 +9,14 @@ const PressPage = () => {
       <div className="container mx-auto px-4 py-24 lg:px-8 lg:py-32">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">Press & Reviews</h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">Reviews</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               What critics and readers are saying about Barbara Townsend&apos;s work.
             </p>
           </div>
 
           {/* Review Images Section */}
-          <div className="grid gap-6 md:grid-cols-2">
+          {/* <div className="grid gap-6 md:grid-cols-2">
             <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-muted transition-all hover:shadow-lg">
               <CardContent className="p-4">
                 <div className="relative aspect-[3/4] w-full">
@@ -50,7 +50,7 @@ const PressPage = () => {
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
           
           <div className="grid gap-8">
             <Card className="bg-card/50 backdrop-blur-sm border-muted transition-all hover:shadow-lg">

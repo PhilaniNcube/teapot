@@ -17,11 +17,11 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-border'>
+    <nav className='sticky top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-border'>
       <div className='container mx-auto px-4 lg:px-8'>
-        <div className='flex items-center justify-between h-24'>
+        <div className='flex items-center justify-between h-32'>
           <Link href='/' className='flex items-center gap-4'>
-            <div className='relative w-16 h-16 rounded-full overflow-hidden'>
+            <div className='relative w-24 h-24 rounded-full overflow-hidden'>
               <Image
                 src='/images/yellow_teapot.webp'
                 alt='Teapot Publishing Logo'
@@ -30,10 +30,10 @@ export function Navigation() {
               />
             </div>
             <div className='flex flex-col'>
-              <span className='text-xl md:text-2xl font-serif font-bold text-[#1d467e] uppercase tracking-wide'>
+              <span className='text-xl md:text-3xl font-serif font-bold text-[#1d467e] uppercase tracking-wide'>
                 Teapot Publishing
               </span>
-              <span className='text-xs md:text-sm font-serif text-foreground font-medium'>
+              <span className='text-md md:text-lg font-serif text-foreground font-medium'>
                 The home of author, Barbara Townsend
               </span>
             </div>
@@ -42,37 +42,37 @@ export function Navigation() {
           <div className='hidden md:flex items-center gap-6 lg:gap-8'>
             <Link
               href='/books'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Books
             </Link>
             <Link
               href='/events'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Events
             </Link>
             <Link
               href='/blogs'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Blogs
             </Link>
             <Link
-              href='/press'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              href='/reviews'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
-              Press
+              Reviews
             </Link>
             <Link
               href='/stockists'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Stockists
             </Link>
             <Link
               href='/books'
-              className='text-sm font-medium text-muted-foreground hover:text-foreground transition-colors'
+              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
             >
               Shop
             </Link>
@@ -115,7 +115,7 @@ export function Navigation() {
                   Blogs
                 </Link>
                 <Link
-                  href='/press'
+                  href='/reviews'
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'
                   onClick={() => setOpen(false)}
                 >
