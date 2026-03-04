@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
-import { RichText } from "@/components/richtext";
+
 
 const eventTypeLabels: Record<string, string> = {
   "book-signing": "Book Signing",

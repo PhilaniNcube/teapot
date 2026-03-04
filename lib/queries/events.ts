@@ -13,7 +13,7 @@ export async function getUpcomingEvents() {
 
   const eventsData = await payload.find({
     collection: "events",
-    sort: "date",
+    sort: ["date", "time"],
     where: {
       status: {
         equals: "upcoming",
