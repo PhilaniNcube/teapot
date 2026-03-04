@@ -14,11 +14,11 @@ export function revalidateAfterChange(
 ): CollectionAfterChangeHook {
   return ({ doc }) => {
     for (const tag of tags) {
-      revalidateTag(tag);
+      revalidateTag(tag, 'max');
     }
     if (dynamicTag) {
       for (const tag of dynamicTag(doc as Record<string, unknown>)) {
-        revalidateTag(tag);
+        revalidateTag(tag, 'max');
       }
     }
     return doc;
@@ -34,11 +34,11 @@ export function revalidateAfterDelete(
 ): CollectionAfterDeleteHook {
   return ({ doc }) => {
     for (const tag of tags) {
-      revalidateTag(tag);
+      revalidateTag(tag, 'max');
     }
     if (dynamicTag) {
       for (const tag of dynamicTag(doc as Record<string, unknown>)) {
-        revalidateTag(tag);
+        revalidateTag(tag, 'max');
       }
     }
     return doc;
