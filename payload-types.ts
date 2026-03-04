@@ -248,7 +248,15 @@ export interface Event {
   time: string;
   venue: string;
   location: string;
-  eventType: 'book-signing' | 'book-launch' | 'reading' | 'talk' | 'festival' | 'workshop' | 'other';
+  eventType:
+    | 'book-signing'
+    | 'book-launch'
+    | 'meet-the-author'
+    | 'reading'
+    | 'talk'
+    | 'festival'
+    | 'workshop'
+    | 'other';
   description: {
     root: {
       type: string;

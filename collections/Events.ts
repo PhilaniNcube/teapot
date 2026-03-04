@@ -84,6 +84,7 @@ export const Events: CollectionConfig = {
       options: [
         { label: "Book Signing", value: "book-signing" },
         { label: "Book Launch", value: "book-launch" },
+        {label: "Meet the Author", value: "meet-the-author" },
         { label: "Reading", value: "reading" },
         { label: "Talk / Lecture", value: "talk" },
         { label: "Festival", value: "festival" },
