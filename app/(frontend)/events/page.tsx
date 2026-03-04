@@ -7,7 +7,7 @@ const EventsPage = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">
-            Upcoming Events
+          Upcoming Events | Autumn Garden Route & Klein Karoo Book Tour
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Join Barbara at her upcoming book signings, readings, and literary
