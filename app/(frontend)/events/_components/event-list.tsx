@@ -58,67 +58,63 @@ const EventList = async () => {
       {/* Upcoming Events */}
       {upcoming.length > 0 && (
         <section>
-          <div className="flex flex-col gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {upcoming.map((event) => (
               <Card
                 key={event.id}
-                className="overflow-hidden transition-shadow hover:shadow-lg"
+                className="overflow-hidden transition-shadow hover:shadow-lg flex flex-col p-0"
               >
-                <div className="md:flex">
-                  {/* Optional image */}
-                  {event.image && typeof event.image === "object" && (
-                    <div className="relative w-full md:w-72 aspect-video md:aspect-auto shrink-0">
-                      <Image
-                        src={event.image.url || ""}
-                        alt={event.image.alt || event.title}
-                        fill
-                        className="object-cover"
-                      />
+                {/* Optional image */}
+                {event.image && typeof event.image === "object" && (
+                  <div className="relative w-full aspect-video shrink-0">
+                    <Image
+                      src={event.image.url || ""}
+                      alt={event.image.alt || event.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+
+                <CardHeader className="bg-[#c9a227] text-white py-3">
+                  <div className="flex flex-wrap justify-between items-center gap-2">
+                    <CardTitle className="text-xl md:text-2xl text-white">{event.title}</CardTitle>
+                    <Badge variant="default" className="bg-white/20 hover:bg-white/30 text-white border-white/40">
+                      {eventTypeLabels[event.eventType] || event.eventType}
+                    </Badge>
+                    {event.status === "cancelled" && (
+                      <Badge variant="destructive">Cancelled</Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3 py-4 flex-1">
+                  {/* Date */}
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <CalendarDays className="h-4 w-4 shrink-0" />
+                    <span>{formatEventDate(event.date)}</span>
+                  </div>
+
+                  {/* Time */}
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-4 w-4 shrink-0" />
+                    <span>{event.time}</span>
+                  </div>
+
+                  {/* Venue & Location */}
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    <span>
+                      {event.venue}, {event.location}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  {event.description && (
+                    <div className="prose prose-sm max-w-none mt-4 text-gray-700">
+                      <RichText data={event.description} />
                     </div>
                   )}
-
-                  <div className="flex-1">
-                    <CardHeader>
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <Badge variant="default" className="bg-[#c9a227] hover:bg-[#b08d1f] text-white">
-                          {eventTypeLabels[event.eventType] || event.eventType}
-                        </Badge>
-                        {event.status === "cancelled" && (
-                          <Badge variant="destructive">Cancelled</Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-2xl">{event.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {/* Date */}
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <CalendarDays className="h-4 w-4 shrink-0" />
-                        <span>{formatEventDate(event.date)}</span>
-                      </div>
-
-                      {/* Time */}
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Clock className="h-4 w-4 shrink-0" />
-                        <span>{event.time}</span>
-                      </div>
-
-                      {/* Venue & Location */}
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="h-4 w-4 shrink-0" />
-                        <span>
-                          {event.venue}, {event.location}
-                        </span>
-                      </div>
-
-                      {/* Description */}
-                      {event.description && (
-                        <div className="prose prose-sm max-w-none mt-4 text-gray-700">
-                          <RichText data={event.description} />
-                        </div>
-                      )}
-                    </CardContent>
-                  </div>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>
@@ -131,22 +127,22 @@ const EventList = async () => {
           <h2 className="text-2xl font-bold tracking-tight mb-6 text-muted-foreground">
             Past Events
           </h2>
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {past.map((event) => (
               <Card
                 key={event.id}
-                className="overflow-hidden opacity-75 hover:opacity-100 transition-opacity"
+                className="overflow-hidden opacity-75 hover:opacity-100 transition-opacity flex flex-col py-0"
               >
-                <CardHeader className="pb-2">
+                <CardHeader className="pb-2 bg-[#c9a227] text-white">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-white/40">
                       {eventTypeLabels[event.eventType] || event.eventType}
                     </Badge>
+                  <CardTitle className="text-lg text-white">{event.title}</CardTitle>
                   </div>
-                  <CardTitle className="text-lg">{event.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                <CardContent className="pt-4">
+                  <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <CalendarDays className="h-3.5 w-3.5" />
                       <span>{formatEventDate(event.date)}</span>

@@ -1,10 +1,17 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from './hooks/revalidate-collection'
+
+const bookDynamicTag = (doc: Record<string, unknown>) => [`book-${doc.id}`]
 
 export const Books: CollectionConfig = {
     slug: 'books',
     labels: {
         singular: 'Book',
         plural: 'Books',
+    },
+    hooks: {
+        afterChange: [revalidateAfterChange(['books'], bookDynamicTag)],
+        afterDelete: [revalidateAfterDelete(['books'], bookDynamicTag)],
     },
     fields: [
         {

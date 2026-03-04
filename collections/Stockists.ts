@@ -1,4 +1,7 @@
 import { CollectionConfig } from "payload";
+import { revalidateAfterChange, revalidateAfterDelete } from './hooks/revalidate-collection'
+
+const stockistDynamicTag = (doc: Record<string, unknown>) => [`stockist-${doc.id}`]
 
 export const Stockists: CollectionConfig = {
     slug: "stockists",
@@ -8,6 +11,10 @@ export const Stockists: CollectionConfig = {
     },
     admin: {
         useAsTitle: "name",
+    },
+    hooks: {
+        afterChange: [revalidateAfterChange(['stockists'], stockistDynamicTag)],
+        afterDelete: [revalidateAfterDelete(['stockists'], stockistDynamicTag)],
     },
     fields: [
         {

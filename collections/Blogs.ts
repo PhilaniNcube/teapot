@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
+import { revalidateAfterChange, revalidateAfterDelete } from './hooks/revalidate-collection'
 
+const blogDynamicTag = (doc: Record<string, unknown>) => [`blog-${doc.id}`]
 
 export const Blogs: CollectionConfig = {
   slug: "blogs",
@@ -9,6 +11,10 @@ export const Blogs: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange(['blog'], blogDynamicTag)],
+    afterDelete: [revalidateAfterDelete(['blog'], blogDynamicTag)],
   },
   fields: [
    

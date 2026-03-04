@@ -1,10 +1,17 @@
 import type { CollectionConfig } from "payload";
+import { revalidateAfterChange, revalidateAfterDelete } from './hooks/revalidate-collection'
+
+const galleryDynamicTag = (doc: Record<string, unknown>) => [`gallery-${doc.id}`]
 
 export const Gallery: CollectionConfig = {
   slug: "gallery",
   labels: {
     singular: "Gallery Item",
     plural: "Gallery",
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange(['gallery'], galleryDynamicTag)],
+    afterDelete: [revalidateAfterDelete(['gallery'], galleryDynamicTag)],
   },
   fields: [
     {

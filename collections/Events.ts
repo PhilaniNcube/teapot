@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload";
+import { revalidateAfterChange, revalidateAfterDelete } from './hooks/revalidate-collection'
 
 export const Events: CollectionConfig = {
   slug: "events",
@@ -9,6 +10,10 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "date", "venue", "eventType", "status"],
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange(['events', 'past-events', 'all-events'])],
+    afterDelete: [revalidateAfterDelete(['events', 'past-events', 'all-events'])],
   },
   fields: [
     {
