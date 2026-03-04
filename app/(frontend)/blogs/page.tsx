@@ -5,8 +5,8 @@ import { Facebook } from "lucide-react";
 
 const BlogsPage = () => {
   return (
-    <main className="py-24 lg:py-32">
-      <div className="container mx-auto px-4">
+    <main className="py-8">
+      <div className="container max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">Our Blog</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

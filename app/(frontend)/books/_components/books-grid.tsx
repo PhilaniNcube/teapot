@@ -20,7 +20,7 @@ const BooksGrid = async () => {
 
   return (
     <div className="">
-      <div className="container px-4 mx-auto lg:px-8">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {books.map((book) => (
             <Card
@@ -85,7 +85,7 @@ const BooksGrid = async () => {
                       <Link href={`/books/${book.id}`}>
                         <Button variant="outline" size="sm">View Details</Button>
                       </Link>
-                      {book.inStock !== false ? (
+                      {/* {book.inStock !== false ? (
                         <AddToCartButton 
                           book={book} 
                           size="sm"
@@ -95,7 +95,7 @@ const BooksGrid = async () => {
                         <Button variant="destructive" size="sm" disabled>
                           Out of Stock
                         </Button>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

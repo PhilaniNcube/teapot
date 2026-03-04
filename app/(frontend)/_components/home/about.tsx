@@ -3,13 +3,13 @@ import Image from "next/image";
 export function About() {
   return (
     <section id="about" className="container pb-24">
-      <div className="grid w-full max-w-7xl mx-auto col-span-3 md:grid-cols-5 min-h-[420px]">
+      <div className="grid w-full max-w-7xl mx-auto grid-cols-2 min-h-[420px]">
         {/* Left - gold bio panel */}
-        <div className="bg-[#c9a227] flex flex-col col-span-3 justify-center px-10 py-12 md:py-16">
+        <div className="bg-[#c9a227] flex flex-col justify-center px-10 py-12 md:py-16">
           <h2 className="text-2xl md:text-4xl uppercase tracking-widest text-white mb-6">
             Meet Barbara&hellip;
           </h2>
-          <div className="space-y-4 text-white/90  text-sm md:text-xl leading-relaxed">
+          <div className="space-y-4 text-white/90  text-sm md:text-lg leading-relaxed">
             <p>
               Barbara Townsend is a writer devoted to uncovering and giving
               voice to overlooked stories.
@@ -34,7 +34,7 @@ export function About() {
         </div>
 
         {/* Right - Barbara photo */}
-        <div className="relative col-span-3 md:col-span-2 min-h-80 md:min-h-0">
+        <div className="relative col-span-2 md:col-span-1 min-h-80 md:min-h-0">
           <Image
             src="/images/portrait.jpg"
             alt="Barbara Townsend"

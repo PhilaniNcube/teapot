@@ -18,7 +18,7 @@ export function Navigation() {
 
   return (
     <nav className='sticky top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-border'>
-      <div className='container mx-auto px-4 lg:px-8'>
+      <div className='container max-w-7xl mx-auto px-4 lg:px-8'>
         <div className='flex items-center justify-between h-32'>
           <Link href='/' className='flex items-center gap-4'>
             <div className='relative w-24 h-24 rounded-full overflow-hidden'>
@@ -70,12 +70,7 @@ export function Navigation() {
             >
               Stockists
             </Link>
-            <Link
-              href='/books'
-              className='text-lg font-medium text-muted-foreground hover:text-foreground transition-colors'
-            >
-              Shop
-            </Link>
+           
           </div>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -128,13 +123,7 @@ export function Navigation() {
                 >
                   Stockists
                 </Link>
-                <Link
-                  href='/books'
-                  className='text-lg text-muted-foreground hover:text-foreground transition-colors'
-                  onClick={() => setOpen(false)}
-                >
-                  Shop
-                </Link>
+              
               </div>
             </SheetContent>
           </Sheet>

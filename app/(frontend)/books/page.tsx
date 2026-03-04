@@ -4,8 +4,8 @@ import BooksLoading from './_components/books-loading'
 
 const BooksPage = () => {
   return (
-    <div className="container mx-auto pt-20 lg:pt-24 pb-12">
-       <div className="px-6 lg:px-10 pb-6">
+    <div className="container max-w-7xl mx-auto py-12">
+       <div className="px-4 pb-6">
         <h2 className="text-3xl font-bold text-foreground mb-2">
           Browse Books
         </h2>

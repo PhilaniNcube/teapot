@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   return (
-    <div className="py-32 container mx-auto px-6 lg:px-10">
+    <div className=" mx-auto px-6 py-8">
       <Suspense fallback={<BookDetailsFallback />}>
         <BookDetails id={parseInt(id)} />
       </Suspense>

@@ -28,7 +28,7 @@ const BookDetails = async ({ id }: BookDetailsProps) => {
 
 
   return (
-    <div className="space-y-8" >
+    <div className="space-y-8 container max-w-7xl px-4 mx-auto" >
       {/* Back button */}
      
 
