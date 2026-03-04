@@ -11,7 +11,7 @@ export async function Hero() {
   return (
     <section className='flex flex-col w-full'>
       {/* Welcome Heading with teapot */}
-      <div className='flex flex-col items-center pt-8 pb-2'>
+      <div className='flex flex-col items-center pb-2'>
         
         <h1 className='text-center font-serif text-3xl pt-3 md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight'>
           Welcome
@@ -26,7 +26,7 @@ export async function Hero() {
       </div>
 
       {/* Books Grid */}
-      <div className='container w-full max-w-7xl mx-auto py-10'>
+      <div className='container w-full max-w-7xl mx-auto py-6'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mx-auto'>
           {books.map((book) => {
             const coverUrl = getCoverImageUrl(book.coverImage);
@@ -41,7 +41,7 @@ export async function Hero() {
 
             return (
               <div key={book.id} className='flex flex-col items-center text-center gap-4'>
-                <div className='relative w-full max-w-[370px] rounded-sm'>
+                <div className='relative w-full max-w-[280px] rounded-sm'>
                   <Image
                     src={coverUrl || '/placeholder.svg'}
                     alt={book.title}
