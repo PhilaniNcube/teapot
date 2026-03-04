@@ -16,12 +16,12 @@ const EventsPage = () => {
               events
             </p>
           </div>
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+          <div className="relative aspect-square w-full overflow-hidden rounded-2xl">
             <Image
               src="/images/portrait.jpg"
               alt="Barbara at a book signing event"
               fill
-              className="object-cover object-top"
+              className="object-cover object-top aspect-square rounded-full"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />
