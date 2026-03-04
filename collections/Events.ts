@@ -79,7 +79,7 @@ export const Events: CollectionConfig = {
       name: "eventType",
       label: "Type of Event",
       type: "select",
-      required: true,
+      required: false,
       defaultValue: "book-signing",
       options: [
         { label: "Book Signing", value: "book-signing" },
@@ -96,7 +96,7 @@ export const Events: CollectionConfig = {
       name: "description",
       label: "Description",
       type: "richText",
-      required: true,
+      required: false,
     },
     {
       name: "image",

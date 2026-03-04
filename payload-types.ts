@@ -248,16 +248,10 @@ export interface Event {
   time: string;
   venue: string;
   location: string;
-  eventType:
-    | 'book-signing'
-    | 'book-launch'
-    | 'meet-the-author'
-    | 'reading'
-    | 'talk'
-    | 'festival'
-    | 'workshop'
-    | 'other';
-  description: {
+  eventType?:
+    | ('book-signing' | 'book-launch' | 'meet-the-author' | 'reading' | 'talk' | 'festival' | 'workshop' | 'other')
+    | null;
+  description?: {
     root: {
       type: string;
       children: {
@@ -271,7 +265,7 @@ export interface Event {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   image?: (number | null) | Media;
   status: 'upcoming' | 'cancelled' | 'completed';
   updatedAt: string;

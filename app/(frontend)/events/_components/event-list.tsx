@@ -1,11 +1,6 @@
 import React from "react";
 import { getUpcomingEvents, getPastEvents } from "@/lib/queries/events";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
@@ -43,9 +38,7 @@ const EventList = async () => {
   if (upcoming.length === 0 && past.length === 0) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-lg font-semibold text-gray-600">
-          No events found
-        </h3>
+        <h3 className="text-lg font-semibold text-gray-600">No events found</h3>
         <p className="text-gray-500 mt-2">
           Check back soon for upcoming events!
         </p>
@@ -78,10 +71,18 @@ const EventList = async () => {
 
                 <CardHeader className="bg-[#c9a227] text-white py-3">
                   <div className="flex flex-wrap justify-between items-center gap-2">
-                    <CardTitle className="text-xl md:text-2xl text-white">{event.title}</CardTitle>
-                    <Badge variant="default" className="bg-white/20 hover:bg-white/30 text-white border-white/40">
-                      {eventTypeLabels[event.eventType] || event.eventType}
-                    </Badge>
+                    <CardTitle className="text-xl md:text-2xl text-white">
+                      {event.title}
+                    </CardTitle>
+                    {event.eventType && (
+                      <Badge
+                        variant="default"
+                        className="bg-white/20 hover:bg-white/30 text-white border-white/40"
+                      >
+                        {eventTypeLabels[event.eventType] || event.eventType}
+                      </Badge>
+                    )}
+
                     {event.status === "cancelled" && (
                       <Badge variant="destructive">Cancelled</Badge>
                     )}
@@ -109,11 +110,11 @@ const EventList = async () => {
                   </div>
 
                   {/* Description */}
-                  {event.description && (
+                  {/* {event.description && (
                     <div className="prose prose-sm max-w-none mt-4 text-gray-700">
                       <RichText data={event.description} />
                     </div>
-                  )}
+                  )} */}
                 </CardContent>
               </Card>
             ))}
@@ -135,10 +136,18 @@ const EventList = async () => {
               >
                 <CardHeader className="pb-2 bg-[#c9a227] text-white">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <Badge variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-white/40">
-                      {eventTypeLabels[event.eventType] || event.eventType}
-                    </Badge>
-                  <CardTitle className="text-lg text-white">{event.title}</CardTitle>
+                    {event.eventType && (
+                      <Badge
+                        variant="secondary"
+                        className="bg-white/20 hover:bg-white/30 text-white border-white/40"
+                      >
+                        {eventTypeLabels[event.eventType] || event.eventType}
+                      </Badge>
+                    )}
+
+                    <CardTitle className="text-lg text-white">
+                      {event.title}
+                    </CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-4">
