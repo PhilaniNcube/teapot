@@ -14,11 +14,11 @@ const EventsPage = () => {
             <h2 className="text-4xl font-bold tracking-tight mb-4">
             Autumn Garden Route &amp; Klein Karoo Book Tour
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl">
+            <p className="text-lg lg:text-2xl text-gray-600 max-w-2xl">
               Join Barbara at her upcoming book signings, readings, and literary
               events
             </p>
-            <span className="text-md text-gray-500 block mt-4">
+            <span className="lg:text-xl uppercase text-gray-500 block mt-4">
               Telling our stories | Writing our lives 
             </span>
           </div>
