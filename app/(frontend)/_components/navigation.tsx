@@ -21,7 +21,7 @@ export function Navigation() {
       <div className='container max-w-7xl mx-auto px-4 lg:px-8'>
         <div className='flex items-center justify-between h-32'>
           <Link href='/' className='flex items-center gap-4'>
-            <div className='relative w-24 h-24 rounded-full overflow-hidden'>
+            <div className='relative shrink-0 w-20 h-20 lg:w-24 lg:h-24 aspect-square rounded-full overflow-hidden'>
               <Image
                 src='/images/yellow_teapot.webp'
                 alt='Teapot Publishing Logo'
