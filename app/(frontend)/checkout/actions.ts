@@ -2,7 +2,6 @@
 
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { CartItem } from '@/lib/store/cart-store'
 
 import { CheckoutSchema, checkoutSchema } from '@/lib/validators/checkout'
 

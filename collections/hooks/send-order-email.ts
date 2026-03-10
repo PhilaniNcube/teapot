@@ -1,82 +1,137 @@
+import { createElement } from 'react'
 import { CollectionAfterChangeHook } from 'payload'
+import OrderConfirmationEmail from '@/emails/order-confirmation'
+import OrderNotificationEmail from '@/emails/order-notification'
+import type { OrderEmailData } from '@/emails/order-email-layout'
 import { resend } from '@/lib/resend'
 import { Order } from '@/payload-types'
+
+type SendOrderEmailArgs = Parameters<CollectionAfterChangeHook<Order>>[0]
+
+const shippingMethodLabels: Record<Order['shippingMethod'], string> = {
+  pep_standard: 'PEP Store (7-9 days) - R60',
+  pep_express: 'PEP Store (3-5 days) - R120',
+}
+
+async function buildOrderEmailData(
+  order: Order,
+  req: SendOrderEmailArgs['req']
+): Promise<OrderEmailData> {
+  const items = await Promise.all(
+    (order.items ?? []).map(async (item) => {
+      const bookId = typeof item.book === 'object' ? item.book.id : item.book
+
+      if (typeof item.book === 'object') {
+        return {
+          title: item.book.title,
+          quantity: item.quantity,
+          unitPrice: item.price,
+          lineTotal: item.price * item.quantity,
+        }
+      }
+
+      try {
+        const book = await req.payload.findByID({
+          collection: 'books',
+          id: bookId,
+        })
+
+        return {
+          title: book.title,
+          quantity: item.quantity,
+          unitPrice: item.price,
+          lineTotal: item.price * item.quantity,
+        }
+      } catch {
+        return {
+          title: `Book #${bookId}`,
+          quantity: item.quantity,
+          unitPrice: item.price,
+          lineTotal: item.price * item.quantity,
+        }
+      }
+    })
+  )
+
+  return {
+    orderId: order.id,
+    customerName: `${order.customerDetails.firstName} ${order.customerDetails.lastName}`,
+    customerEmail: order.customerDetails.email,
+    customerPhone: order.customerDetails.phone,
+    shippingMethodLabel: shippingMethodLabels[order.shippingMethod],
+    collectionPoint: order.collectionPoint,
+    shippingCost: order.shippingCost,
+    total: order.total,
+    addressLines: [
+      order.customerDetails.address,
+      `${order.customerDetails.city}, ${order.customerDetails.province}`,
+      order.customerDetails.postalCode,
+    ],
+    items,
+  }
+}
+
+async function sendOrderEmailMessage(
+  label: string,
+  data: Parameters<typeof resend.emails.send>[0]
+) {
+  try {
+    const { error } = await resend.emails.send(data)
+
+    if (error) {
+      console.error(`Failed to send ${label}:`, error)
+    }
+  } catch (error) {
+    console.error(`Unexpected error sending ${label}:`, error)
+  }
+}
 
 export const sendOrderEmail: CollectionAfterChangeHook<Order> = async ({
   doc,
   req,
   operation,
 }) => {
-  if (operation === 'create') {
-    try {
-      let itemsHtml = ''
-      
-      if (doc.items && doc.items.length > 0) {
-        const itemsWithDetails = await Promise.all(
-          doc.items.map(async (item) => {
-            try {
-                // Check if item.book is an object (populated) or ID
-                const bookId = typeof item.book === 'object' ? item.book.id : item.book
-                
-                const book = await req.payload.findByID({
-                  collection: 'books',
-                  id: bookId,
-                })
-                return {
-                  title: book.title,
-                  quantity: item.quantity,
-                  price: item.price
-                }
-            } catch (e) {
-                return {
-                    title: 'Unknown Book',
-                    quantity: item.quantity,
-                    price: item.price
-                }
-            }
-          })
-        )
-
-        itemsHtml = itemsWithDetails
-          .map(
-            (item) =>
-              `<li>${item.title} (Qty: ${item.quantity}) - R${item.price}</li>`
-          )
-          .join('')
-      }
-
-      const shippingLabel =
-        doc.shippingMethod === 'pep_express' 
-            ? 'PEP Store (3-5 days) - R120' 
-            : 'PEP Store (7-9 days) - R60'
-
-      await resend.emails.send({
-        from: process.env.RESEND_SENDER_EMAIL_ADDRESS!,
-        to: 'wynnetownsend@gmail.com',
-        subject: `New Order Received: #${doc.id}`,
-        html: `
-            <h1>New Order Received</h1>
-            <p><strong>Order ID:</strong> ${doc.id}</p>
-            <p><strong>Customer:</strong> ${doc.customerDetails.firstName} ${doc.customerDetails.lastName} (${doc.customerDetails.email})</p>
-            <p><strong>Phone:</strong> ${doc.customerDetails.phone}</p>
-            <p><strong>Total:</strong> R${doc.total}</p>
-            <p><strong>Shipping:</strong> ${shippingLabel} to ${doc.collectionPoint}</p>
-            
-            <h2>Items:</h2>
-            <ul>
-                ${itemsHtml}
-            </ul>
-            
-            <h2>Shipping Address:</h2>
-            <p>
-            ${doc.customerDetails.address}<br/>
-            ${doc.customerDetails.city}, ${doc.customerDetails.province}<br/>
-            ${doc.customerDetails.postalCode}
-            </p>
-        `,
-      })
-    } catch (error) {
-      console.error('Error sending order email:', error)
-    }
+  if (operation !== 'create') {
+    return doc
   }
+
+  const senderEmail = process.env.RESEND_SENDER_EMAIL_ADDRESS
+  const notificationEmail = process.env.NEXT_PUBLIC_EMAIL_ADDRESS
+
+  if (!senderEmail || !notificationEmail) {
+    console.error(
+      'Missing RESEND_SENDER_EMAIL_ADDRESS or NEXT_PUBLIC_EMAIL_ADDRESS. Order emails were not sent.'
+    )
+    return doc
+  }
+
+  try {
+    const orderEmailData = await buildOrderEmailData(doc, req)
+
+    await Promise.all([
+      sendOrderEmailMessage('customer order confirmation', {
+        from: senderEmail,
+        to: doc.customerDetails.email,
+        replyTo: notificationEmail,
+        subject: `Your Teapot Publishing order ${doc.id}`,
+        react: createElement(OrderConfirmationEmail, {
+          order: orderEmailData,
+          supportEmail: notificationEmail,
+        }),
+      }),
+      sendOrderEmailMessage('internal order notification', {
+        from: senderEmail,
+        to: notificationEmail,
+        replyTo: doc.customerDetails.email,
+        subject: `New order received #${doc.id}`,
+        react: createElement(OrderNotificationEmail, {
+          order: orderEmailData,
+        }),
+      }),
+    ])
+  } catch (error) {
+    console.error('Error preparing order emails:', error)
+  }
+
+  return doc
 }
