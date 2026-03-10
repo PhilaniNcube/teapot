@@ -11,8 +11,9 @@ import { formatPrice } from '@/lib/utils'
 import { createOrder, OrderState } from './actions'
 import { useActionState, useEffect, startTransition } from 'react'
 import Link from 'next/link'
-import { Loader2 } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import Image from 'next/image'
+import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { checkoutSchema, CheckoutSchema } from '@/lib/validators/checkout'
 import {
@@ -27,7 +28,7 @@ import {
 const initialState: OrderState = {}
 
 export default function CheckoutPage() {
-  const { items, totalPrice, isHydrated, clearCart } = useCart()
+  const { items, totalPrice, isHydrated, clearCart, updateQuantity, removeItem } = useCart()
   const [state, action, isPending] = useActionState(createOrder, initialState)
 
   const form = useForm<CheckoutSchema>({
@@ -48,22 +49,23 @@ export default function CheckoutPage() {
   })
 
   // Watch for dynamic updates
-  const shippingMethod = form.watch('shippingMethod')
+  const shippingMethod = useWatch({
+    control: form.control,
+    name: 'shippingMethod',
+  })
   const shippingCost = shippingMethod === 'pep_express' ? 120 : 60
   const finalTotal = totalPrice + shippingCost
 
   // Sync cart items to form
   useEffect(() => {
-    if (items.length > 0) {
-      // Map store items to schema items
-      const schemaItems = items.map(item => ({
-        id: item.id,
-        title: item.title,
-        price: item.price,
-        quantity: item.quantity
-      }))
-      form.setValue('cartItems', schemaItems)
-    }
+    const schemaItems = items.map(item => ({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity,
+    }))
+
+    form.setValue('cartItems', schemaItems)
   }, [items, form])
 
   useEffect(() => {
@@ -73,8 +75,15 @@ export default function CheckoutPage() {
   }, [state.success, clearCart])
 
   const onSubmit = (data: CheckoutSchema) => {
+    const cartItems = items.map(item => ({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity,
+    }))
+
     startTransition(() => {
-      action(data)
+      action({ ...data, cartItems })
     })
   }
 
@@ -342,9 +351,70 @@ export default function CheckoutPage() {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     {items.map((item) => (
-                      <div key={item.id} className="flex justify-between text-sm">
-                        <span className="truncate flex-1 pr-4">{item.title} (x{item.quantity})</span>
-                        <span>{formatPrice(item.price * item.quantity)}</span>
+                      <div key={item.id} className="flex gap-3 rounded-lg border p-3">
+                        <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
+                          <Image
+                            src={item.coverImageUrl || '/abstract-book-cover.png'}
+                            alt={item.title}
+                            fill
+                            sizes="64px"
+                            className="object-cover"
+                          />
+                        </div>
+
+                        <div className="min-w-0 flex-1 space-y-3">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium leading-snug">{item.title}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatPrice(item.price)} each
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium whitespace-nowrap">
+                              {formatPrice(item.price * item.quantity)}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center rounded-md border">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                className="rounded-r-none"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1}
+                                aria-label={`Decrease quantity of ${item.title}`}
+                              >
+                                <Minus className="h-3 w-3" />
+                              </Button>
+                              <span className="w-10 text-center text-sm font-medium">
+                                {item.quantity}
+                              </span>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                className="rounded-l-none"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                aria-label={`Increase quantity of ${item.title}`}
+                              >
+                                <Plus className="h-3 w-3" />
+                              </Button>
+                            </div>
+
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-auto px-2 text-destructive hover:text-destructive"
+                              onClick={() => removeItem(item.id)}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
