@@ -1,27 +1,50 @@
 'use server'
 
+import { createElement } from 'react'
+
+import ContactFormSubmissionEmail from '@/emails/contact-form-submission'
 import { resend } from '@/lib/resend'
 
-export async function sendContactEmail(prevState: any, formData: FormData) {
+export type ContactEmailState = {
+  success?: boolean
+  message?: string
+}
+
+export async function sendContactEmail(
+  _prevState: ContactEmailState,
+  formData: FormData
+) {
   const firstName = formData.get('firstName') as string
   const lastName = formData.get('lastName') as string
   const email = formData.get('email') as string
   const subject = formData.get('subject') as string
   const message = formData.get('message') as string
 
+  const senderEmail = process.env.RESEND_SENDER_EMAIL_ADDRESS
+  const notificationEmail = process.env.NEXT_PUBLIC_EMAIL_ADDRESS
+
+  if (!senderEmail || !notificationEmail) {
+    console.error(
+      'Missing RESEND_SENDER_EMAIL_ADDRESS or NEXT_PUBLIC_EMAIL_ADDRESS. Contact email was not sent.'
+    )
+    return { success: false, message: 'Failed to send message.' }
+  }
+
   try {
-    const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_SENDER_EMAIL_ADDRESS!,
-      to: 'wynnetownsend@gmail.com',
+    const { error } = await resend.emails.send({
+      from: senderEmail,
+      to: notificationEmail,
+      replyTo: email,
       subject: `New Contact Form Submission: ${subject}`,
-      html: `
-        <h1>New Contact Form Submission</h1>
-        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+      react: createElement(ContactFormSubmissionEmail, {
+        submission: {
+          firstName,
+          lastName,
+          email,
+          subject,
+          message,
+        },
+      }),
     })
 
     if (error) {
