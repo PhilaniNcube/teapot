@@ -46,14 +46,14 @@ export function ContactForm() {
         <Input id="email" name="email" type="email" placeholder="john.doe@example.com" required />
       </div>
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <Label htmlFor="subject">Subject</Label>
         <Input id="subject" name="subject" placeholder="What would you like to discuss?" required />
-      </div>
+      </div> */}
 
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
-        <Textarea id="message" name="message" placeholder="Your message here..." rows={6} required />
+        <Textarea id="message" name="message" placeholder="Please describe your order query..." rows={6} required />
       </div>
 
       <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isPending}>

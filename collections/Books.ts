@@ -13,6 +13,10 @@ export const Books: CollectionConfig = {
         afterChange: [revalidateAfterChange(['books'], bookDynamicTag)],
         afterDelete: [revalidateAfterDelete(['books'], bookDynamicTag)],
     },
+    admin: {
+        useAsTitle: 'title',
+        
+    },
     fields: [
         {
             name: 'title',

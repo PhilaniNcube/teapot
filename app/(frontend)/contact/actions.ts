@@ -17,7 +17,7 @@ export async function sendContactEmail(
   const firstName = formData.get('firstName') as string
   const lastName = formData.get('lastName') as string
   const email = formData.get('email') as string
-  const subject = formData.get('subject') as string
+  // const subject = formData.get('subject') as string
   const message = formData.get('message') as string
 
   const senderEmail = process.env.RESEND_SENDER_EMAIL_ADDRESS
@@ -35,13 +35,13 @@ export async function sendContactEmail(
       from: senderEmail,
       to: notificationEmail,
       replyTo: email,
-      subject: `New Contact Form Submission: ${subject}`,
+      subject: `Book Order Inquiry from ${firstName} ${lastName}`,
       react: createElement(ContactFormSubmissionEmail, {
         submission: {
           firstName,
           lastName,
           email,
-          subject,
+          // subject,
           message,
         },
       }),

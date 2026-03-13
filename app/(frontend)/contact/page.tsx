@@ -6,8 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ContactForm } from "./_components/contact-form";
-import { Mail, Phone } from "lucide-react";
-import Link from "next/link";
+import { Mail } from "lucide-react";
 import { Suspense } from "react";
 
 export default function ContactPage() {
@@ -18,16 +17,17 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl  font-bold text-foreground mb-4 text-balance">
-              Get in Touch
+              Contact Us About Your Order
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              I&apos;d love to hear your questions and comments about my books
+            <p className="text-lg lg:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+             <Mail className="w-5 h-5 inline-block mr-2" />
+             cathteapot@gmail.com
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className=" gap-8">
             {/* Contact Form */}
-            <div className="md:col-span-2">
+            <div className="">
               <Card>
                 <CardHeader>
                   <CardTitle className="">Send a Message</CardTitle>
@@ -45,7 +45,7 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="">Contact Information</CardTitle>
@@ -82,7 +82,7 @@ export default function ContactPage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

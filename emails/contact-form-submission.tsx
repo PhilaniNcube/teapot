@@ -15,7 +15,7 @@ export type ContactFormSubmission = {
   firstName: string
   lastName: string
   email: string
-  subject: string
+  // subject: string
   message: string
 }
 
@@ -27,7 +27,7 @@ export const sampleContactFormSubmission: ContactFormSubmission = {
   firstName: 'Barbara',
   lastName: 'Townsend',
   email: 'reader@example.com',
-  subject: 'Book signing enquiry',
+  // subject: 'Book order enquiry',
   message:
     'Hello,\n\nI would like to learn more about upcoming book signings and speaking events.\n\nThank you.',
 }
@@ -54,7 +54,7 @@ export default function ContactFormSubmissionEmail({
           <Section style={heroSection}>
             <Text style={brand}>Teapot Publishing</Text>
             <Text style={pill}>Contact form enquiry</Text>
-            <Heading style={headingStyle}>{submission.subject}</Heading>
+            <Heading style={headingStyle}>Book Order Inquiry</Heading>
             <Text style={introStyle}>
               {senderName} sent a new message from the website contact form.
             </Text>
