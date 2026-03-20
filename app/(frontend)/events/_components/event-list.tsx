@@ -141,12 +141,7 @@ const EventList = async () => {
       {/* Upcoming Events */}
       {upcoming.length > 0 && (
         <section className="space-y-10">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Upcoming Events</h2>
-            <p className="mt-2 text-muted-foreground">
-              Browse upcoming appearances grouped by category.
-            </p>
-          </div>
+         
 
           {upcomingGroups.map((group) => (
             <div key={group.id} className="space-y-6">

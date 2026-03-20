@@ -11,15 +11,15 @@ const EventsPage = () => {
         </h1> */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="text-center md:text-left">
-            {/* <h2 className="text-4xl font-bold tracking-tight mb-4">
-            Cedarberg &amp; West Coast Tour
-            </h2> */}
+            <h2 className="text-4xl font-bold tracking-tight mb-4">
+              Upcoming Events
+            </h2>
             <p className="text-lg lg:text-2xl text-gray-600 max-w-2xl">
               Join Barbara at her upcoming book signings, readings, and literary
               events
             </p>
             <span className="lg:text-xl uppercase text-gray-500 block mt-4">
-              Telling our stories | Writing our lives 
+              Telling our stories | Writing our lives
             </span>
           </div>
           <div className="relative w-full overflow-hidden flex items-center justify-center rounded-2xl">
