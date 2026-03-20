@@ -114,7 +114,7 @@ export function Navigation() {
                   className='text-lg text-muted-foreground hover:text-foreground transition-colors'
                   onClick={() => setOpen(false)}
                 >
-                  Press
+                  Reviews
                 </Link>
                 <Link
                   href='/stockists'
