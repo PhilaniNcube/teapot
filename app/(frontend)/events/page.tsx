@@ -24,14 +24,14 @@ const EventsPage = () => {
           </div>
           <div className="relative w-full overflow-hidden flex items-center justify-center rounded-2xl">
             <Image
-              src="/images/shelf.webp"
+              src="/images/shelf-2.jpeg"
               alt="Barbara at a book signing event"
               // fill
               width={400}
               height={400}
               className="object-cover object-top w-1/3 aspect-square rounded-full mx-auto"
               priority
-              // sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         </div>
