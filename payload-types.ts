@@ -72,6 +72,7 @@ export interface Config {
     books: Book;
     blogs: Blog;
     events: Event;
+    eventCategories: EventCategory;
     stockists: Stockist;
     orders: Order;
     gallery: Gallery;
@@ -88,6 +89,7 @@ export interface Config {
     books: BooksSelect<false> | BooksSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    eventCategories: EventCategoriesSelect<false> | EventCategoriesSelect<true>;
     stockists: StockistsSelect<false> | StockistsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
@@ -248,6 +250,7 @@ export interface Event {
   time: string;
   venue: string;
   location: string;
+  category?: (number | null) | EventCategory;
   eventType?:
     | ('book-signing' | 'book-launch' | 'meet-the-author' | 'reading' | 'talk' | 'festival' | 'workshop' | 'other')
     | null;
@@ -268,6 +271,16 @@ export interface Event {
   } | null;
   image?: (number | null) | Media;
   status: 'upcoming' | 'cancelled' | 'completed';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategories".
+ */
+export interface EventCategory {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -402,6 +415,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'eventCategories';
+        value: number | EventCategory;
       } | null)
     | ({
         relationTo: 'stockists';
@@ -546,10 +563,20 @@ export interface EventsSelect<T extends boolean = true> {
   time?: T;
   venue?: T;
   location?: T;
+  category?: T;
   eventType?: T;
   description?: T;
   image?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategories_select".
+ */
+export interface EventCategoriesSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }

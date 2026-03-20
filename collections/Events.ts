@@ -76,6 +76,13 @@ export const Events: CollectionConfig = {
       ],
     },
     {
+      name: "category",
+      label: "Event Category",
+      type: "relationship",
+      relationTo: "eventCategories",
+      required: false,
+    },
+    {
       name: "eventType",
       label: "Type of Event",
       type: "select",
