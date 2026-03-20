@@ -12,7 +12,7 @@ const EventsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="text-center md:text-left">
             <h2 className="text-4xl font-bold tracking-tight mb-4">
-            Autumn Garden Route &amp; Klein Karoo Book Tour
+            Cedarberg &amp; West Coast Tour
             </h2>
             <p className="text-lg lg:text-2xl text-gray-600 max-w-2xl">
               Join Barbara at her upcoming book signings, readings, and literary
@@ -24,7 +24,7 @@ const EventsPage = () => {
           </div>
           <div className="relative w-full overflow-hidden flex items-center justify-center rounded-2xl">
             <Image
-              src="/images/portrait.jpg"
+              src="/images/shelf.webp"
               alt="Barbara at a book signing event"
               // fill
               width={400}
