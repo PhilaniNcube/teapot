@@ -6,9 +6,9 @@ const EventsPage = () => {
   return (
     <main className="py-8">
       <div className="container max-w-7xl mx-auto px-4">
-        <h1 className="text-5xl font-extrabold tracking-tight mb-12 text-center">
+        {/* <h1 className="text-5xl font-extrabold tracking-tight mb-12 text-center">
           Upcoming Events
-        </h1>
+        </h1> */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="text-center md:text-left">
             {/* <h2 className="text-4xl font-bold tracking-tight mb-4">
