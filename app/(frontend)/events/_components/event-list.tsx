@@ -1,9 +1,31 @@
 import React from "react";
 import { getUpcomingEvents, getPastEvents } from "@/lib/queries/events";
+import type { Event } from "@/payload-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
+
+
+type EventListItem = Pick<
+  Event,
+  | "id"
+  | "title"
+  | "date"
+  | "time"
+  | "venue"
+  | "location"
+  | "category"
+  | "eventType"
+  | "image"
+  | "status"
+>;
+
+type UpcomingEventGroup = {
+  id: string;
+  name: string;
+  events: EventListItem[];
+};
 
 
 const eventTypeLabels: Record<string, string> = {
@@ -26,14 +48,82 @@ function formatEventDate(dateString: string) {
   }).format(date);
 }
 
+function isEventListItem(event: { id: number } | EventListItem): event is EventListItem {
+  return (
+    "title" in event &&
+    "date" in event &&
+    "time" in event &&
+    "venue" in event &&
+    "location" in event &&
+    "status" in event
+  );
+}
+
+function getEventCategoryGroup(event: EventListItem) {
+  if (event.category && typeof event.category === "object") {
+    const categoryName = event.category.name.trim();
+
+    if (categoryName) {
+      return {
+        id: `category-${event.category.id}`,
+        name: categoryName,
+      };
+    }
+  }
+
+  if (typeof event.category === "number") {
+    return {
+      id: `category-${event.category}`,
+      name: `Category ${event.category}`,
+    };
+  }
+
+  return {
+    id: "uncategorized",
+    name: "Uncategorized",
+  };
+}
+
+function groupUpcomingEventsByCategory(events: EventListItem[]) {
+  const groups = new Map<string, UpcomingEventGroup>();
+
+  for (const event of events) {
+    const category = getEventCategoryGroup(event);
+    const existingGroup = groups.get(category.id);
+
+    if (existingGroup) {
+      existingGroup.events.push(event);
+      continue;
+    }
+
+    groups.set(category.id, {
+      ...category,
+      events: [event],
+    });
+  }
+
+  return Array.from(groups.values()).sort((left, right) => {
+    if (left.id === "uncategorized") {
+      return 1;
+    }
+
+    if (right.id === "uncategorized") {
+      return -1;
+    }
+
+    return left.name.localeCompare(right.name);
+  });
+}
+
 const EventList = async () => {
   const [upcomingData, pastData] = await Promise.all([
     getUpcomingEvents(),
     getPastEvents(),
   ]);
 
-  const upcoming = upcomingData.docs;
-  const past = pastData.docs;
+  const upcoming = upcomingData.docs.filter(isEventListItem);
+  const past = pastData.docs.filter(isEventListItem);
+  const upcomingGroups = groupUpcomingEventsByCategory(upcoming);
 
   if (upcoming.length === 0 && past.length === 0) {
     return (
@@ -50,75 +140,93 @@ const EventList = async () => {
     <div className="space-y-16">
       {/* Upcoming Events */}
       {upcoming.length > 0 && (
-        <section>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcoming.map((event) => (
-              <Card
-                key={event.id}
-                className="overflow-hidden transition-shadow hover:shadow-lg flex flex-col p-0"
-              >
-                {/* Optional image */}
-                {event.image && typeof event.image === "object" && (
-                  <div className="relative w-full aspect-video shrink-0">
-                    <Image
-                      src={event.image.url || ""}
-                      alt={event.image.alt || event.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-
-                <CardHeader className="bg-[#c9a227] text-white py-3">
-                  <div className="flex flex-wrap justify-between items-center gap-2">
-                    <CardTitle className="text-xl md:text-2xl text-white">
-                      {event.title}
-                    </CardTitle>
-                    {event.eventType && (
-                      <Badge
-                        variant="default"
-                        className="bg-white/20 hover:bg-white/30 text-white border-white/40"
-                      >
-                        {eventTypeLabels[event.eventType] || event.eventType}
-                      </Badge>
-                    )}
-
-                    {event.status === "cancelled" && (
-                      <Badge variant="destructive">Cancelled</Badge>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3 py-4 flex-1">
-                  {/* Date */}
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <CalendarDays className="h-4 w-4 shrink-0" />
-                    <span>{formatEventDate(event.date)}</span>
-                  </div>
-
-                  {/* Time */}
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4 shrink-0" />
-                    <span>{event.time}</span>
-                  </div>
-
-                  {/* Venue & Location */}
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin className="h-4 w-4 shrink-0" />
-                    <span>
-                      {event.venue}, {event.location}
-                    </span>
-                  </div>
-
-                  {/* Description */}
-                  {/* {event.description && (
-                    <div className="prose prose-sm max-w-none mt-4 text-gray-700">
-                      <RichText data={event.description} />
-                    </div>
-                  )} */}
-                </CardContent>
-              </Card>
-            ))}
+        <section className="space-y-10">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight">Upcoming Events</h2>
+            <p className="mt-2 text-muted-foreground">
+              Browse upcoming appearances grouped by category.
+            </p>
           </div>
+
+          {upcomingGroups.map((group) => (
+            <div key={group.id} className="space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
+                <h3 className="text-2xl font-semibold tracking-tight">{group.name}</h3>
+                <Badge variant="outline" className="px-3 py-1 text-sm">
+                  {group.events.length} {group.events.length === 1 ? "event" : "events"}
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {group.events.map((event) => (
+                  <Card
+                    key={event.id}
+                    className="overflow-hidden transition-shadow hover:shadow-lg flex flex-col p-0"
+                  >
+                    {/* Optional image */}
+                    {event.image && typeof event.image === "object" && (
+                      <div className="relative w-full aspect-video shrink-0">
+                        <Image
+                          src={event.image.url || ""}
+                          alt={event.image.alt || event.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+
+                    <CardHeader className="bg-[#c9a227] text-white py-3">
+                      <div className="flex flex-wrap justify-between items-center gap-2">
+                        <CardTitle className="text-xl md:text-2xl text-white">
+                          {event.title}
+                        </CardTitle>
+                        {event.eventType && (
+                          <Badge
+                            variant="default"
+                            className="bg-white/20 hover:bg-white/30 text-white border-white/40"
+                          >
+                            {eventTypeLabels[event.eventType] || event.eventType}
+                          </Badge>
+                        )}
+
+                        {event.status === "cancelled" && (
+                          <Badge variant="destructive">Cancelled</Badge>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3 py-4 flex-1">
+                      {/* Date */}
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <CalendarDays className="h-4 w-4 shrink-0" />
+                        <span>{formatEventDate(event.date)}</span>
+                      </div>
+
+                      {/* Time */}
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Clock className="h-4 w-4 shrink-0" />
+                        <span>{event.time}</span>
+                      </div>
+
+                      {/* Venue & Location */}
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <MapPin className="h-4 w-4 shrink-0" />
+                        <span>
+                          {event.venue}, {event.location}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      {/* {event.description && (
+                        <div className="prose prose-sm max-w-none mt-4 text-gray-700">
+                          <RichText data={event.description} />
+                        </div>
+                      )} */}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       )}
 
