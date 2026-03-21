@@ -18,8 +18,12 @@ const ReviewsContent = async () => {
   const reviews: ReviewListItem[] = reviewsData.docs.map((review) => ({
     id: review.id,
     bookTitle: getBookTitle(review.book),
+    selfPublishing: Boolean(review.selfPublishing),
     reviewerName: review.reviewerName,
     content: review.content,
+    longContent: review.longContent,
+    link: review.link,
+    image: typeof review.image === "object" ? review.image : null,
   }));
 
   if (reviews.length === 0) {

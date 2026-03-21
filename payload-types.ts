@@ -367,8 +367,26 @@ export interface Gallery {
 export interface Review {
   id: number;
   book: number | Book;
+  selfPublishing?: boolean | null;
   reviewerName: string;
   content: string;
+  longContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  link?: string | null;
+  image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -653,8 +671,12 @@ export interface GallerySelect<T extends boolean = true> {
  */
 export interface ReviewsSelect<T extends boolean = true> {
   book?: T;
+  selfPublishing?: T;
   reviewerName?: T;
   content?: T;
+  longContent?: T;
+  link?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }
