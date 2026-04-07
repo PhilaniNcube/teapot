@@ -13,7 +13,9 @@ export function Footer() {
            
             <div className="flex gap-3">
               <Button variant="outline" size="icon">
-                <Facebook className="w-5 h-5" />
+                <Link href="https://www.facebook.com/barbara.townsend.7334504" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="w-5 h-5" />
+                </Link>
               </Button>
               
             </div>
@@ -49,10 +51,10 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h4 className="font-semibold text-foreground mb-4">Shop</h4>
             <ul className="space-y-2"></ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="border-t border-border pt-8 text-center text-muted-foreground text-sm">
