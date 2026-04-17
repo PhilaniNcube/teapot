@@ -25,7 +25,7 @@ export type ReviewListItem = {
   hasBook: boolean;
   selfPublishing: boolean;
   reviewerName: string;
-  content: string;
+  content: Review["content"];
   longContent?: Review["longContent"];
   link?: string | null;
   image?: Media | null;
@@ -43,6 +43,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const longContent = review.longContent ?? null;
   const hasLongContent = longContent !== null;
+  const hasContent = typeof review.content === "string" && review.content.trim().length > 0;
   const reviewTitle = review.hasBook ? `Review of ${review.bookTitle}` : "General review";
 
   return (
@@ -78,9 +79,11 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <blockquote className="whitespace-pre-line italic leading-relaxed text-muted-foreground">
-          {review.content}
-        </blockquote>
+        {hasContent ? (
+          <blockquote className="whitespace-pre-line italic leading-relaxed text-muted-foreground">
+            {review.content}
+          </blockquote>
+        ) : null}
 
         {hasLongContent ? (
           <div className="space-y-4 rounded-2xl border border-border/60 bg-background/70 p-4">
