@@ -24,6 +24,7 @@ type ReviewType = 'text' | 'video'
 type ReviewValidationContext = {
     siblingData?: {
         reviewType?: ReviewType
+        videoFile?: unknown
     }
 }
 
@@ -32,8 +33,12 @@ const validateVideoUrl = (value: string | null | undefined, context?: ReviewVali
         return true
     }
 
+    if (!value && !context?.siblingData?.videoFile) {
+        return 'Provide a video upload or a hosted video URL for video reviews.'
+    }
+
     if (!value) {
-        return 'Video URL is required for video reviews.'
+        return true
     }
 
     return validateReviewLink(value)
@@ -120,10 +125,20 @@ export const Reviews: CollectionConfig = {
             type: 'text',
             required: false,
             admin: {
-                description: 'Add a hosted video URL (for example YouTube, Vimeo, or your own hosted MP4).',
+                description: 'Optional if a video upload is selected below.',
                 condition: (_, siblingData) => siblingData?.reviewType === 'video',
             },
             validate: validateVideoUrl,
+        },
+        {
+            name: 'videoFile',
+            type: 'upload',
+            relationTo: 'media',
+            required: false,
+            admin: {
+                description: 'Upload a video file to Payload media storage.',
+                condition: (_, siblingData) => siblingData?.reviewType === 'video',
+            },
         },
         {
             name: 'image',

@@ -1,9 +1,15 @@
-import type { Review } from "@/payload-types";
+import type { Media, Review } from "@/payload-types";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { getReviews } from "@/lib/queries/reviews";
 
 import ReviewsFilter, { type ReviewListItem } from "./reviews-filter";
+
+type ReviewWithVideoFields = Review & {
+  reviewType?: "text" | "video" | null;
+  videoUrl?: string | null;
+  videoFile?: (number | null) | Media;
+};
 
 const getBookTitle = (book: Review["book"]) => {
   if (book && typeof book === "object" && "title" in book && typeof book.title === "string") {
@@ -19,7 +25,10 @@ const hasLinkedBook = (book: Review["book"]) => {
 
 const ReviewsContent = async () => {
   const reviewsData = await getReviews();
-  const reviews: ReviewListItem[] = reviewsData.docs.map((review) => ({
+  const reviews: ReviewListItem[] = reviewsData.docs.map((review) => {
+    const reviewData = review as ReviewWithVideoFields;
+
+    return {
     id: review.id,
     bookTitle: getBookTitle(review.book),
     hasBook: hasLinkedBook(review.book),
@@ -27,9 +36,13 @@ const ReviewsContent = async () => {
     reviewerName: review.reviewerName,
     content: review.content,
     longContent: review.longContent,
+    reviewType: reviewData.reviewType ?? "text",
+    videoUrl: reviewData.videoUrl ?? null,
+    videoFile: typeof reviewData.videoFile === "object" ? reviewData.videoFile : null,
     link: review.link,
     image: typeof review.image === "object" ? review.image : null,
-  }));
+    };
+  });
 
   if (reviews.length === 0) {
     return (

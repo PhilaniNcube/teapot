@@ -388,9 +388,13 @@ export interface Review {
   } | null;
   link?: string | null;
   /**
-   * Add a hosted video URL (for example YouTube, Vimeo, or your own hosted MP4).
+   * Optional if a video upload is selected below.
    */
   videoUrl?: string | null;
+  /**
+   * Upload a video file to Payload media storage.
+   */
+  videoFile?: (number | null) | Media;
   image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
@@ -683,6 +687,7 @@ export interface ReviewsSelect<T extends boolean = true> {
   longContent?: T;
   link?: T;
   videoUrl?: T;
+  videoFile?: T;
   image?: T;
   updatedAt?: T;
   createdAt?: T;

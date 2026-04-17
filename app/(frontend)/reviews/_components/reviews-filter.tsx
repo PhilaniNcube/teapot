@@ -27,6 +27,9 @@ export type ReviewListItem = {
   reviewerName: string;
   content: Review["content"];
   longContent?: Review["longContent"];
+  reviewType: "text" | "video";
+  videoUrl?: string | null;
+  videoFile?: Media | null;
   link?: string | null;
   image?: Media | null;
 };
@@ -39,11 +42,43 @@ type ReviewCardProps = {
   review: ReviewListItem;
 };
 
+const getVideoEmbedUrl = (videoUrl: string) => {
+  try {
+    const parsedUrl = new URL(videoUrl);
+    const host = parsedUrl.hostname.toLowerCase();
+
+    if (host.includes("youtube.com")) {
+      const videoId = parsedUrl.searchParams.get("v");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (host.includes("youtu.be")) {
+      const videoId = parsedUrl.pathname.replace("/", "");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (host.includes("vimeo.com")) {
+      const vimeoId = parsedUrl.pathname.split("/").filter(Boolean)[0];
+      return vimeoId ? `https://player.vimeo.com/video/${vimeoId}` : null;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+};
+
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const longContent = review.longContent ?? null;
   const hasLongContent = longContent !== null;
   const hasContent = typeof review.content === "string" && review.content.trim().length > 0;
+  const uploadedVideoUrl = review.videoFile?.url ?? null;
+  const hasVideoUrl = typeof review.videoUrl === "string" && review.videoUrl.trim().length > 0;
+  const hasVideo = Boolean(uploadedVideoUrl) || hasVideoUrl;
+  const videoUrl = review.videoUrl?.trim() ?? "";
+  const playbackUrl = uploadedVideoUrl ?? videoUrl;
+  const embedUrl = hasVideo ? getVideoEmbedUrl(videoUrl) : null;
   const reviewTitle = review.hasBook ? `Review of ${review.bookTitle}` : "General review";
 
   return (
@@ -70,6 +105,11 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                 Self-published
               </Badge>
             ) : null}
+            {review.reviewType === "video" ? (
+              <Badge variant="secondary" className="mt-2 ml-2">
+                Video review
+              </Badge>
+            ) : null}
             <CardTitle className="text-xl font-serif leading-relaxed">
               {reviewTitle}
             </CardTitle>
@@ -83,6 +123,29 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           <blockquote className="whitespace-pre-line italic leading-relaxed text-muted-foreground">
             {review.content}
           </blockquote>
+        ) : null}
+
+        {hasVideo ? (
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-foreground">Watch review</p>
+            <div className="overflow-hidden rounded-xl border border-border/60 bg-black/5">
+              {embedUrl && !uploadedVideoUrl ? (
+                <iframe
+                  src={embedUrl}
+                  title={`Video review by ${review.reviewerName}`}
+                  className="aspect-video w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              ) : (
+                <video controls className="aspect-video w-full" preload="metadata">
+                  <source src={playbackUrl} />
+                  Your browser does not support embedded video playback.
+                </video>
+              )}
+            </div>
+          </div>
         ) : null}
 
         {hasLongContent ? (
