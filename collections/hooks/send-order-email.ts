@@ -105,7 +105,7 @@ export const sendOrderEmail: CollectionAfterChangeHook<Order> = async ({
   }
 
   const senderEmail = process.env.RESEND_SENDER_EMAIL_ADDRESS
-  const notificationEmail = process.env.NEXT_PUBLIC_EMAIL_ADDRESS
+  const notificationEmail = "cathteapot@gmail.com"
 
   if (!senderEmail || !notificationEmail) {
     console.error(
