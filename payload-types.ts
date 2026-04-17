@@ -333,10 +333,10 @@ export interface Order {
     lastName: string;
     email: string;
     phone: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    province: string;
+    address?: string | null;
+    city?: string | null;
+    postalCode?: string | null;
+    province?: string | null;
   };
   updatedAt: string;
   createdAt: string;

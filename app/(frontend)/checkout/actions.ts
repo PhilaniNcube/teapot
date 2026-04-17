@@ -35,7 +35,14 @@ export async function createOrder(
     } = validatedFields.data
 
     const customerDetails = {
-      firstName, lastName, email, phone, address, city, postalCode, province
+      firstName,
+      lastName,
+      email,
+      phone,
+      ...(address ? { address } : {}),
+      ...(city ? { city } : {}),
+      ...(postalCode ? { postalCode } : {}),
+      ...(province ? { province } : {}),
     }
 
     let shippingCost = 0

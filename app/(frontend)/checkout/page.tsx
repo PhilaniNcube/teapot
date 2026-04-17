@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/componen
 import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/lib/utils'
 import { createOrder, OrderState } from './actions'
-import { useActionState, useEffect, startTransition } from 'react'
+import { useActionState, useEffect, useState, startTransition } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
@@ -23,7 +23,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from '@/components/ui/form'
+import { Checkbox } from '@/components/ui/checkbox'
 
 const initialState: OrderState = {}
 
@@ -47,6 +49,8 @@ export default function CheckoutPage() {
       cartItems: [],
     },
   })
+
+  const [showAddress, setShowAddress] = useState(false)
 
   // Watch for dynamic updates
   const shippingMethod = useWatch({
@@ -210,62 +214,83 @@ export default function CheckoutPage() {
                   </div>
 
                   <Separator className="my-2" />
-                  
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Street Address</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="123 Main St, Suburb" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <div className="grid grid-cols-2 gap-4">
-                     <FormField
-                      control={form.control}
-                      name="city"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>City</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Cape Town" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                  <div className="flex items-center space-x-2 py-2">
+                    <Checkbox
+                      id="show-address"
+                      checked={showAddress}
+                      onCheckedChange={(checked) => setShowAddress(Boolean(checked))}
                     />
-                     <FormField
-                      control={form.control}
-                      name="postalCode"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Postal Code</FormLabel>
-                          <FormControl>
-                            <Input placeholder="8001" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <label
+                      htmlFor="show-address"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Add a street address (optional)
+                    </label>
                   </div>
-                   <FormField
-                    control={form.control}
-                    name="province"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Province</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Western Cape" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <p className="text-xs text-muted-foreground">
+                    Your order will be delivered to a PEP store for collection. A street address is only needed if you require it on your invoice.
+                  </p>
+
+                  {showAddress ? (
+                    <>
+                      <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Street Address</FormLabel>
+                            <FormControl>
+                              <Textarea placeholder="123 Main St, Suburb" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="city"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>City</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Cape Town" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="postalCode"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Postal Code</FormLabel>
+                              <FormControl>
+                                <Input placeholder="8001" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="province"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Province</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Western Cape" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </>
+                  ) : null}
 
                 </CardContent>
               </Card>

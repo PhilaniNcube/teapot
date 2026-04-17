@@ -26,7 +26,7 @@ export type OrderEmailData = {
   collectionPoint: string
   shippingCost: number
   total: number
-  addressLines: string[]
+  addressLines?: string[]
   items: OrderEmailItem[]
 }
 
@@ -176,14 +176,16 @@ export function OrderEmailLayout({
             <Text style={detailLine}>{order.customerPhone}</Text>
           </Section>
 
-          <Section style={panel}>
-            <Text style={sectionLabel}>Shipping address</Text>
-            {order.addressLines.map((line, index) => (
-              <Text key={`${line}-${index}`} style={detailLine}>
-                {line}
-              </Text>
-            ))}
-          </Section>
+          {order.addressLines && order.addressLines.length > 0 ? (
+            <Section style={panel}>
+              <Text style={sectionLabel}>Shipping address</Text>
+              {order.addressLines.map((line, index) => (
+                <Text key={`${line}-${index}`} style={detailLine}>
+                  {line}
+                </Text>
+              ))}
+            </Section>
+          ) : null}
 
           {closingNote ? <Text style={closingNoteStyle}>{closingNote}</Text> : null}
           <Text style={footerStyle}>Teapot Publishing</Text>

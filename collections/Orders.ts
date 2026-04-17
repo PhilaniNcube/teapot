@@ -119,22 +119,22 @@ export const Orders: CollectionConfig = {
             {
                 name: 'address',
                 type: 'textarea',
-                required: true,
+                required: false,
             },
             {
               name: 'city',
               type: 'text',
-              required: true,
+              required: false,
             },
             {
               name: 'postalCode',
               type: 'text',
-              required: true,
+              required: false,
             },
              {
               name: 'province',
               type: 'text',
-              required: true,
+              required: false,
             }
         ]
     }

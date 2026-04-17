@@ -53,6 +53,19 @@ async function buildOrderEmailData(
     })
   )
 
+  const addressLines: string[] = []
+  if (order.customerDetails.address) {
+    addressLines.push(order.customerDetails.address)
+  }
+  if (order.customerDetails.city || order.customerDetails.province) {
+    addressLines.push(
+      [order.customerDetails.city, order.customerDetails.province].filter(Boolean).join(', ')
+    )
+  }
+  if (order.customerDetails.postalCode) {
+    addressLines.push(order.customerDetails.postalCode)
+  }
+
   return {
     orderId: order.id,
     customerName: `${order.customerDetails.firstName} ${order.customerDetails.lastName}`,
@@ -62,11 +75,7 @@ async function buildOrderEmailData(
     collectionPoint: order.collectionPoint,
     shippingCost: order.shippingCost,
     total: order.total,
-    addressLines: [
-      order.customerDetails.address,
-      `${order.customerDetails.city}, ${order.customerDetails.province}`,
-      order.customerDetails.postalCode,
-    ],
+    addressLines: addressLines.length > 0 ? addressLines : undefined,
     items,
   }
 }
@@ -113,7 +122,7 @@ export const sendOrderEmail: CollectionAfterChangeHook<Order> = async ({
         from: senderEmail,
         to: doc.customerDetails.email,
         replyTo: notificationEmail,
-        subject: `Your Teapot Publishing order ${doc.id}`,
+        subject: `Teapot Publishing order confirmation`,
         react: createElement(OrderConfirmationEmail, {
           order: orderEmailData,
           supportEmail: notificationEmail,
