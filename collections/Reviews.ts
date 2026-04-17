@@ -19,6 +19,38 @@ const validateReviewLink = (value: string | null | undefined) => {
     }
 }
 
+type ReviewType = 'text' | 'video'
+
+type ReviewValidationContext = {
+    siblingData?: {
+        reviewType?: ReviewType
+    }
+}
+
+const validateVideoUrl = (value: string | null | undefined, context?: ReviewValidationContext) => {
+    if (context?.siblingData?.reviewType !== 'video') {
+        return true
+    }
+
+    if (!value) {
+        return 'Video URL is required for video reviews.'
+    }
+
+    return validateReviewLink(value)
+}
+
+const validateReviewContent = (value: string | null | undefined, context?: ReviewValidationContext) => {
+    if (context?.siblingData?.reviewType === 'video') {
+        return true
+    }
+
+    if (!value || value.trim().length === 0) {
+        return 'Content is required for text reviews.'
+    }
+
+    return true
+}
+
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
     labels: {
@@ -26,7 +58,7 @@ export const Reviews: CollectionConfig = {
         plural: 'Reviews',
     },
     admin: {
-        useAsTitle: 'book',
+        useAsTitle: 'reviewerName',
     },
     hooks: {
         afterChange: [revalidateAfterChange(['reviews', 'books'])],
@@ -34,10 +66,26 @@ export const Reviews: CollectionConfig = {
     },
     fields: [
         {
+            name: 'reviewType',
+            type: 'select',
+            required: false,
+            defaultValue: 'text',
+            options: [
+                {
+                    label: 'Text review',
+                    value: 'text',
+                },
+                {
+                    label: 'Video review',
+                    value: 'video',
+                },
+            ],
+        },
+        {
             name: 'book',
             type: 'relationship',
             relationTo: 'books',
-            required: true,
+            required: false,
         },
         {
             name: 'selfPublishing',
@@ -52,7 +100,8 @@ export const Reviews: CollectionConfig = {
         {
             name: 'content',
             type: 'text',
-            required: true,
+            required: false,
+            validate: validateReviewContent,
         }, 
         {
             name: 'longContent',
@@ -65,7 +114,17 @@ export const Reviews: CollectionConfig = {
             type:'text',
             required: false,
             validate: validateReviewLink,
-        }, 
+        },
+        {
+            name: 'videoUrl',
+            type: 'text',
+            required: false,
+            admin: {
+                description: 'Add a hosted video URL (for example YouTube, Vimeo, or your own hosted MP4).',
+                condition: (_, siblingData) => siblingData?.reviewType === 'video',
+            },
+            validate: validateVideoUrl,
+        },
         {
             name: 'image',
             type: 'upload',

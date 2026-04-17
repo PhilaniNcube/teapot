@@ -10,7 +10,11 @@ const getBookTitle = (book: Review["book"]) => {
     return book.title;
   }
 
-  return "Untitled book";
+  return "General review";
+};
+
+const hasLinkedBook = (book: Review["book"]) => {
+  return Boolean(book && typeof book === "object" && "title" in book && typeof book.title === "string");
 };
 
 const ReviewsContent = async () => {
@@ -18,6 +22,7 @@ const ReviewsContent = async () => {
   const reviews: ReviewListItem[] = reviewsData.docs.map((review) => ({
     id: review.id,
     bookTitle: getBookTitle(review.book),
+    hasBook: hasLinkedBook(review.book),
     selfPublishing: Boolean(review.selfPublishing),
     reviewerName: review.reviewerName,
     content: review.content,

@@ -366,10 +366,11 @@ export interface Gallery {
  */
 export interface Review {
   id: number;
-  book: number | Book;
+  reviewType?: ('text' | 'video') | null;
+  book?: (number | null) | Book;
   selfPublishing?: boolean | null;
   reviewerName: string;
-  content: string;
+  content?: string | null;
   longContent?: {
     root: {
       type: string;
@@ -386,6 +387,10 @@ export interface Review {
     [k: string]: unknown;
   } | null;
   link?: string | null;
+  /**
+   * Add a hosted video URL (for example YouTube, Vimeo, or your own hosted MP4).
+   */
+  videoUrl?: string | null;
   image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
@@ -670,12 +675,14 @@ export interface GallerySelect<T extends boolean = true> {
  * via the `definition` "reviews_select".
  */
 export interface ReviewsSelect<T extends boolean = true> {
+  reviewType?: T;
   book?: T;
   selfPublishing?: T;
   reviewerName?: T;
   content?: T;
   longContent?: T;
   link?: T;
+  videoUrl?: T;
   image?: T;
   updatedAt?: T;
   createdAt?: T;

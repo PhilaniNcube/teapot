@@ -22,6 +22,7 @@ const ALL_BOOKS_VALUE = "__all_books__";
 export type ReviewListItem = {
   id: number;
   bookTitle: string;
+  hasBook: boolean;
   selfPublishing: boolean;
   reviewerName: string;
   content: string;
@@ -42,6 +43,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const longContent = review.longContent ?? null;
   const hasLongContent = longContent !== null;
+  const reviewTitle = review.hasBook ? `Review of ${review.bookTitle}` : "General review";
 
   return (
     <Card className="overflow-hidden border-muted bg-card/50 backdrop-blur-sm transition-all hover:shadow-lg">
@@ -49,7 +51,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
         <div className="relative aspect-video w-full">
           <Image
             src={review.image.url}
-            alt={review.image.alt || `Review of ${review.bookTitle}`}
+            alt={review.image.alt || reviewTitle}
             fill
             className="object-cover"
           />
@@ -68,7 +70,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
               </Badge>
             ) : null}
             <CardTitle className="text-xl font-serif leading-relaxed">
-              Review of {review.bookTitle}
+              {reviewTitle}
             </CardTitle>
           </div>
           <Quote className="h-8 w-8 shrink-0 text-primary/20" />
