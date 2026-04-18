@@ -40,6 +40,7 @@ export function About() {
             alt="Barbara Townsend"
             fill
             className="w-full h-full object-cover object-top"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </div>

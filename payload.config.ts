@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { resendAdapter } from "@payloadcms/email-resend";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
@@ -37,6 +38,11 @@ export default buildConfig({
         ...rootFeatures,
       ];
     },
+  }),
+  email: resendAdapter({
+    defaultFromAddress: process.env.RESEND_SENDER_EMAIL_ADDRESS || "hello@teapotpublishing.co.za",
+    defaultFromName: "Teapot Publishing",
+    apiKey: process.env.RESEND_API_KEY || "",
   }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

@@ -27,6 +27,7 @@ export function Navigation() {
                 alt='Teapot Publishing Logo'
                 fill
                 className='object-cover'
+                sizes="( max-width: 640px ) 40vw, ( max-width: 1024px ) 20vw, 10vw"
               />
             </div>
             <div className='flex flex-col'>
