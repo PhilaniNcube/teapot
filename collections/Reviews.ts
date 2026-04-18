@@ -81,7 +81,7 @@ export const Reviews: CollectionConfig = {
                     value: 'text',
                 },
                 {
-                    label: 'Video review',
+                    label: 'Video interview',
                     value: 'video',
                 },
             ],
