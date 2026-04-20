@@ -12,6 +12,7 @@ export const Orders: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'id',
+    defaultColumns: ['customerDetails.firstName', 'customerDetails.lastName', 'status', 'total', 'createdAt'],
   },
   fields: [
     {
