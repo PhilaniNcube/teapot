@@ -9,6 +9,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { Coffee } from "lucide-react";
+
 
 const BlogList = async () => {
   const blogsData = await getBlogs();
@@ -16,12 +18,19 @@ const BlogList = async () => {
 
   if (!blogs || blogs.length === 0) {
     return (
-      <div className="text-center py-12">
-        <h3 className="text-lg font-semibold text-gray-600">No blogs found</h3>
-        <p className="text-gray-500 mt-2">Check back later for new content!</p>
+      <div className="flex flex-col items-center justify-center py-20 px-4 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 max-w-2xl mx-auto my-8 animate-in fade-in zoom-in duration-500">
+        <div className="bg-white p-4 rounded-full shadow-sm mb-6 border border-gray-100">
+          <Coffee className="w-8 h-8 text-primary/60" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 tracking-tight">No stories brewing yet</h3>
+        <p className="text-gray-500 mt-3 max-w-md mx-auto leading-relaxed text-lg">
+          We&apos;re currently crafting some fresh content and steep stories. 
+          Please check back soon for new updates and insights.
+        </p>
       </div>
     );
   }
+
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
