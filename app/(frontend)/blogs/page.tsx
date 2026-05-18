@@ -9,7 +9,7 @@ const BlogsPage = () => {
       <div className="container max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">The Blog</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Telling the lesser-known stories
           </p>
           <div className="flex justify-center mt-6">
