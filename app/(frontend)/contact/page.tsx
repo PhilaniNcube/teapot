@@ -37,7 +37,7 @@ export default function ContactPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Suspense>
+                  <Suspense fallback={<div className="h-96 bg-slate-100/50 animate-pulse rounded-md" />}>
                     <ContactForm />
                   </Suspense>
                 </CardContent>

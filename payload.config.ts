@@ -18,6 +18,7 @@ import { Orders } from "./collections/Orders";
 import { Gallery } from "./collections/Gallery";
 import { Reviews } from "./collections/Reviews";
 import { EventCategory } from "./collections/EventCategory";
+import { Subscribers } from "./collections/Subscribers";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -29,7 +30,19 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Books, Blogs, Events, EventCategory, Stockists, Orders, Gallery, Reviews],
+  collections: [
+    Users,
+    Media,
+    Books,
+    Blogs,
+    Events,
+    EventCategory,
+    Stockists,
+    Orders,
+    Gallery,
+    Reviews,
+    Subscribers,
+  ],
   editor: lexicalEditor({
     // Lexical-specific arguments go here.
     features({ defaultFeatures, rootFeatures, }) {
