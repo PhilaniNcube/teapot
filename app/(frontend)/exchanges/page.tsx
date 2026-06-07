@@ -11,7 +11,7 @@ export default function ExchangesPage() {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-gray-600 leading-relaxed space-y-6">
             <p className="text-sm text-muted-foreground">
-              Last updated: {new Date().toLocaleDateString("en-ZA", { year: "numeric", month: "long", day: "numeric" })}
+              Last updated: 07 June 2026
             </p>
 
             <section>
