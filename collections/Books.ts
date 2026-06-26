@@ -63,6 +63,11 @@ export const Books: CollectionConfig = {
             label: 'In Stock',
             defaultValue: true,
             required: true,
+        },
+        {
+            name: 'theme',
+            type: "richText",
+            required: false
         }
     ],
 }
