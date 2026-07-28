@@ -70,6 +70,45 @@ export const Orders: CollectionConfig = {
       required: true,
     },
     {
+      name: 'paymentStatus',
+      type: 'select',
+      options: [
+        { label: 'Unpaid', value: 'unpaid' },
+        { label: 'Paid', value: 'paid' },
+        { label: 'Failed', value: 'failed' },
+        { label: 'Cancelled', value: 'cancelled' },
+      ],
+      defaultValue: 'unpaid',
+      required: true,
+    },
+    {
+      name: 'paymentMethod',
+      type: 'select',
+      options: [
+        { label: 'Payfast', value: 'payfast' },
+        { label: 'Manual', value: 'manual' },
+      ],
+      defaultValue: 'payfast',
+      required: true,
+    },
+    {
+      name: 'payfastPaymentId',
+      type: 'text',
+      label: 'Payfast Payment ID',
+      admin: {
+        description: 'Payfast transaction ID received in ITN',
+      },
+    },
+    {
+      name: 'paidAt',
+      type: 'date',
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+    {
         name: 'shippingMethod',
         type: 'select',
         options: [

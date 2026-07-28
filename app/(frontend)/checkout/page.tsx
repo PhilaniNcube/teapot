@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/componen
 import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/lib/utils'
 import { createOrder, OrderState } from './actions'
-import { useActionState, useEffect, useState, startTransition } from 'react'
+import { useActionState, useEffect, useState, startTransition, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
@@ -32,6 +32,7 @@ const initialState: OrderState = {}
 export default function CheckoutPage() {
   const { items, totalPrice, isHydrated, clearCart, updateQuantity, removeItem } = useCart()
   const [state, action, isPending] = useActionState(createOrder, initialState)
+  const payfastFormRef = useRef<HTMLFormElement>(null)
 
   const form = useForm<CheckoutSchema>({
     resolver: zodResolver(checkoutSchema),
@@ -75,6 +76,9 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (state.success) {
       clearCart()
+      if (payfastFormRef.current) {
+        payfastFormRef.current.submit()
+      }
     }
   }, [state.success, clearCart])
 
@@ -95,6 +99,27 @@ export default function CheckoutPage() {
     return (
       <div className="container mx-auto py-10 px-4 min-h-[60vh] flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    )
+  }
+
+  if (state.success && state.payfastUrl && state.payfastFields) {
+    return (
+      <div className="container mx-auto py-20 px-4 min-h-[60vh] flex flex-col items-center justify-center text-center max-w-md">
+        <Loader2 className="h-10 w-10 animate-spin text-primary mb-6" />
+        <h1 className="text-2xl font-bold mb-2">Redirecting to Payfast...</h1>
+        <p className="text-muted-foreground mb-6">
+          Order #{state.orderId} created successfully. You are being redirected securely to Payfast to complete payment.
+        </p>
+
+        <form ref={payfastFormRef} action={state.payfastUrl} method="POST">
+          {Object.entries(state.payfastFields).map(([key, val]) => (
+            <input key={key} type="hidden" name={key} value={val} />
+          ))}
+          <Button type="submit" size="lg">
+            Proceed to Payfast Payment
+          </Button>
+        </form>
       </div>
     )
   }
@@ -120,7 +145,7 @@ export default function CheckoutPage() {
         </div>
         <h1 className="text-3xl font-bold mb-4">Order Placed!</h1>
         <p className="text-muted-foreground mb-8">
-          Thank you for your order. Your order ID is #{state.orderId}. We will contact you shortly with payment details.
+          Thank you for your order. Your order ID is #{state.orderId}.
         </p>
         <Button asChild>
           <Link href="/">Return to Home</Link>

@@ -78,6 +78,7 @@ export interface Config {
     gallery: Gallery;
     reviews: Review;
     subscribers: Subscriber;
+    transactions: Transaction;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     gallery: GallerySelect<false> | GallerySelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    transactions: TransactionsSelect<false> | TransactionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -339,6 +341,13 @@ export interface Order {
    */
   total: number;
   status: 'pending' | 'shipped' | 'delivered' | 'cancelled';
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'cancelled';
+  paymentMethod: 'payfast' | 'manual';
+  /**
+   * Payfast transaction ID received in ITN
+   */
+  payfastPaymentId?: string | null;
+  paidAt?: string | null;
   shippingMethod: 'pep_standard' | 'pep_express';
   /**
    * The specific PEP store selected by the user
@@ -428,6 +437,43 @@ export interface Subscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "transactions".
+ */
+export interface Transaction {
+  id: number;
+  /**
+   * Associated order
+   */
+  order: number | Order;
+  /**
+   * Unique Payfast transaction ID (pf_payment_id)
+   */
+  pfPaymentId?: string | null;
+  /**
+   * Payment status returned by Payfast (e.g. COMPLETE, FAILED, CANCELLED)
+   */
+  paymentStatus: string;
+  amountGross?: number | null;
+  amountFee?: number | null;
+  amountNet?: number | null;
+  signature?: string | null;
+  /**
+   * Complete raw ITN response data from Payfast
+   */
+  rawPayload?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -493,6 +539,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subscribers';
         value: number | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'transactions';
+        value: number | Transaction;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -668,6 +718,10 @@ export interface OrdersSelect<T extends boolean = true> {
       };
   total?: T;
   status?: T;
+  paymentStatus?: T;
+  paymentMethod?: T;
+  payfastPaymentId?: T;
+  paidAt?: T;
   shippingMethod?: T;
   collectionPoint?: T;
   shippingCost?: T;
@@ -730,6 +784,22 @@ export interface ReviewsSelect<T extends boolean = true> {
  */
 export interface SubscribersSelect<T extends boolean = true> {
   email?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "transactions_select".
+ */
+export interface TransactionsSelect<T extends boolean = true> {
+  order?: T;
+  pfPaymentId?: T;
+  paymentStatus?: T;
+  amountGross?: T;
+  amountFee?: T;
+  amountNet?: T;
+  signature?: T;
+  rawPayload?: T;
   updatedAt?: T;
   createdAt?: T;
 }

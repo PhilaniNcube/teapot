@@ -97,10 +97,15 @@ async function sendOrderEmailMessage(
 
 export const sendOrderEmail: CollectionAfterChangeHook<Order> = async ({
   doc,
+  previousDoc,
   req,
   operation,
 }) => {
-  if (operation !== 'create') {
+  // Only send emails when an order has been successfully paid
+  const isNowPaid = doc.paymentStatus === 'paid'
+  const wasAlreadyPaid = previousDoc?.paymentStatus === 'paid'
+
+  if (!isNowPaid || wasAlreadyPaid) {
     return doc
   }
 

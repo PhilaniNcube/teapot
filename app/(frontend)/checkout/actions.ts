@@ -1,14 +1,17 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-
 import { CheckoutSchema, checkoutSchema } from '@/lib/validators/checkout'
+import { buildPayfastFormData } from '@/lib/payfast'
 
 export type OrderState = {
   success?: boolean
   error?: string
   orderId?: string
+  payfastUrl?: string
+  payfastFields?: Record<string, string>
   errors?: Record<string, string[]>
 }
 
@@ -66,10 +69,35 @@ export async function createOrder(
         })),
         total,
         status: 'pending',
+        paymentStatus: 'unpaid',
+        paymentMethod: 'payfast',
       },
     })
 
-    return { success: true, orderId: order.id.toString() }
+    // Determine Base URL for callbacks
+    const headerList = await headers()
+    const host = headerList.get('host') || 'localhost:3000'
+    const proto = headerList.get('x-forwarded-proto') || 'http'
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `${proto}://${host}`
+
+    const itemName = `Teapot Publishing Order #${order.id}`
+
+    const payfastData = buildPayfastFormData({
+      orderId: order.id.toString(),
+      amount: total,
+      itemName,
+      firstName,
+      lastName,
+      email,
+      baseUrl,
+    })
+
+    return {
+      success: true,
+      orderId: order.id.toString(),
+      payfastUrl: payfastData.actionUrl,
+      payfastFields: payfastData.fields,
+    }
 
   } catch (error) {
     console.error('Failed to create order:', error)

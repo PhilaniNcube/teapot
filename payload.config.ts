@@ -19,6 +19,7 @@ import { Gallery } from "./collections/Gallery";
 import { Reviews } from "./collections/Reviews";
 import { EventCategory } from "./collections/EventCategory";
 import { Subscribers } from "./collections/Subscribers";
+import { Transactions } from "./collections/Transactions";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -42,6 +43,7 @@ export default buildConfig({
     Gallery,
     Reviews,
     Subscribers,
+    Transactions,
   ],
   editor: lexicalEditor({
     // Lexical-specific arguments go here.
