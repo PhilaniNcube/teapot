@@ -33,14 +33,14 @@ export async function Hero() {
             const coverUrl = getCoverImageUrl(book.coverImage);
             const coverWidth =
               book.coverImage &&
-              typeof book.coverImage === "object" &&
-              book.coverImage.width
+                typeof book.coverImage === "object" &&
+                book.coverImage.width
                 ? book.coverImage.width
                 : 400;
             const coverHeight =
               book.coverImage &&
-              typeof book.coverImage === "object" &&
-              book.coverImage.height
+                typeof book.coverImage === "object" &&
+                book.coverImage.height
                 ? book.coverImage.height
                 : 600;
 
@@ -69,15 +69,15 @@ export async function Hero() {
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-xs line-clamp-2">
                   {typeof book.description === "object" &&
-                  book.description !== null &&
-                  "root" in book.description
+                    book.description !== null &&
+                    "root" in book.description
                     ? ((
-                        book.description as {
-                          root: {
-                            children: { children?: { text?: string }[] }[];
-                          };
-                        }
-                      ).root.children?.[0]?.children?.[0]?.text ?? "")
+                      book.description as {
+                        root: {
+                          children: { children?: { text?: string }[] }[];
+                        };
+                      }
+                    ).root.children?.[0]?.children?.[0]?.text ?? "")
                     : ""}
                 </p>
                 <Link href={`/books/${book.id}`}>
@@ -86,7 +86,7 @@ export async function Hero() {
                     size="lg"
                     className="uppercase bg-slate-700 text-white  tracking-widest text-xs rounded-none"
                   >
-                    Read More
+                    Order Now
                   </Button>
                 </Link>
               </div>
