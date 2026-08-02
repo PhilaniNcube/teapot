@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState, useEffect, useRef } from 'react'
-import { Check, Mail } from 'lucide-react'
+import { Check, Mail, MailIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { subscribeNewsletter } from './newsletter-action'
 import { Button } from '@/components/ui/button'
@@ -30,16 +30,16 @@ export function Newsletter() {
   const bulletPoints = [
     "News about upcoming books and launches",
     "Behind-the-scenes stories from Barbara's writing life",
-    "Historical discoveries that inspire her novels",
     "Personal reflections and memoir-writing insights",
     "Exclusive updates before they're shared elsewhere",
+    "We welcome your comments about the books"
   ]
 
   return (
     <section id="newsletter" className="container pb-24 px-4">
       <div className="w-full max-w-7xl mx-auto bg-[#faf7f2] border border-[#c9a227]/20 rounded-lg shadow-sm overflow-hidden p-8 md:p-12 lg:p-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
+
           {/* Left Panel: Content & Benefits */}
           <div className="lg:col-span-7 space-y-6">
             <div>
@@ -50,7 +50,7 @@ export function Newsletter() {
                 Receive occasional emails featuring:
               </p>
             </div>
-            
+
             <ul className="space-y-3.5">
               {bulletPoints.map((point, index) => (
                 <li key={index} className="flex items-start gap-3 text-sm md:text-base text-foreground/90">
@@ -61,6 +61,10 @@ export function Newsletter() {
                 </li>
               ))}
             </ul>
+            <span className="flex items-center gap-2">
+              <MailIcon className="w-3.5 h-3.5 stroke-[3]" />
+              wynnetownsend@gmail.com
+            </span>
           </div>
 
           {/* Right Panel: Subscription Form */}

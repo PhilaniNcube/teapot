@@ -86,7 +86,7 @@ export async function Hero() {
                     size="lg"
                     className="uppercase bg-slate-700 text-white  tracking-widest text-xs rounded-none"
                   >
-                    Order Now
+                    See More
                   </Button>
                 </Link>
               </div>
