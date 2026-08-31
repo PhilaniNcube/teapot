@@ -19,7 +19,11 @@ export default function OrderConfirmationEmail({
       previewText={`We have received your order ${formatOrderId(order.orderId)}.`}
       recipientLabel="Order confirmation"
       heading="Thanks for your order"
-      intro={`We have received your order, ${order.customerName}. We will let you know as soon as it is ready for collection at ${order.collectionPoint}.`}
+      intro={
+        order.collectionPoint
+          ? `We have received your order, ${order.customerName}. We will let you know as soon as it is ready for collection at ${order.collectionPoint}.`
+          : `We have received your order, ${order.customerName}. We will let you know as soon as it is on its way to your delivery address.`
+      }
       closingNote={`If you need to update anything, reply to this email or contact ${supportEmail}.`}
       order={order}
     />

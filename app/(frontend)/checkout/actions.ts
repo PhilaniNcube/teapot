@@ -51,6 +51,7 @@ export async function createOrder(
     let shippingCost = 0
     if (shippingMethod === 'pep_standard') shippingCost = 60
     if (shippingMethod === 'pep_express') shippingCost = 120
+    if (shippingMethod === 'home_delivery') shippingCost = 120
 
     const itemsTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)
     const total = itemsTotal + shippingCost
@@ -60,7 +61,7 @@ export async function createOrder(
       data: {
         customerDetails,
         shippingMethod,
-        collectionPoint,
+        ...(collectionPoint ? { collectionPoint } : {}),
         shippingCost,
         items: cartItems.map(item => ({
           book: item.id,

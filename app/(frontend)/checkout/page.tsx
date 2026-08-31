@@ -58,8 +58,69 @@ export default function CheckoutPage() {
     control: form.control,
     name: 'shippingMethod',
   })
-  const shippingCost = shippingMethod === 'pep_express' ? 120 : 60
+  const isHomeDelivery = shippingMethod === 'home_delivery'
+  const shippingCost = !shippingMethod || shippingMethod === 'pep_standard' ? 60 : 120
   const finalTotal = totalPrice + shippingCost
+
+  const addressFields = (
+    <>
+      <FormField
+        control={form.control}
+        name="address"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Street Address</FormLabel>
+            <FormControl>
+              <Textarea placeholder="123 Main St, Suburb" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <div className="grid grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input placeholder="Cape Town" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="postalCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Postal Code</FormLabel>
+              <FormControl>
+                <Input placeholder="8001" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+      <FormField
+        control={form.control}
+        name="province"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Province</FormLabel>
+            <FormControl>
+              <Input placeholder="Western Cape" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  )
 
   // Sync cart items to form
   useEffect(() => {
@@ -240,80 +301,25 @@ export default function CheckoutPage() {
 
                   <Separator className="my-2" />
 
-                  <div className="flex items-center space-x-2 py-2">
-                    <Checkbox
-                      id="show-address"
-                      checked={showAddress}
-                      onCheckedChange={(checked) => setShowAddress(Boolean(checked))}
-                    />
-                    <label
-                      htmlFor="show-address"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Add a street address (optional)
-                    </label>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Your order will be delivered to a PEP store for collection. A street address is only needed if you require it on your invoice.
-                  </p>
-
-                  {showAddress ? (
+                  {!isHomeDelivery ? (
                     <>
-                      <FormField
-                        control={form.control}
-                        name="address"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Street Address</FormLabel>
-                            <FormControl>
-                              <Textarea placeholder="123 Main St, Suburb" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="city"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>City</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Cape Town" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
+                      <div className="flex items-center space-x-2 py-2">
+                        <Checkbox
+                          id="show-address"
+                          checked={showAddress}
+                          onCheckedChange={(checked) => setShowAddress(Boolean(checked))}
                         />
-                        <FormField
-                          control={form.control}
-                          name="postalCode"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Postal Code</FormLabel>
-                              <FormControl>
-                                <Input placeholder="8001" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        <label
+                          htmlFor="show-address"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Add a street address (optional)
+                        </label>
                       </div>
-                      <FormField
-                        control={form.control}
-                        name="province"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Province</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Western Cape" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      <p className="text-xs text-muted-foreground">
+                        Your order will be delivered to a PEP store for collection. A street address is only needed if you require it on your invoice.
+                      </p>
+                      {showAddress ? addressFields : null}
                     </>
                   ) : null}
 
@@ -360,6 +366,18 @@ export default function CheckoutPage() {
                                 <span className="font-bold">{formatPrice(120)}</span>
                               </FormLabel>
                             </FormItem>
+                            <FormItem className="flex items-center space-x-2 border p-4 rounded-md cursor-pointer hover:bg-muted/50 transition-colors space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="home_delivery" />
+                              </FormControl>
+                              <FormLabel className="flex flex-1 items-start justify-between cursor-pointer font-normal m-0">
+                                <div className="flex flex-col space-y-1">
+                                  <span className="font-medium">Home Delivery</span>
+                                  <span className="text-xs text-muted-foreground">3-5 Days Delivery. Delivered straight to your street address.</span>
+                                </div>
+                                <span className="font-bold">{formatPrice(120)}</span>
+                              </FormLabel>
+                            </FormItem>
                           </RadioGroup>
                         </FormControl>
                         <FormMessage />
@@ -367,27 +385,36 @@ export default function CheckoutPage() {
                     )}
                   />
 
-                  <div className="mt-4 space-y-2">
-                    <FormField
-                      control={form.control}
-                      name="collectionPoint"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            Nearest PEP Store
-                          </FormLabel>
-                          <FormControl>
-                             <Input 
-                              placeholder="e.g. PEP Gardens Center"
-                              {...field} 
-                            />
+                  {isHomeDelivery ? (
+                    <div className="mt-4 space-y-4 border-t pt-4">
+                      <p className="text-xs text-muted-foreground">
+                        Your order will be delivered to your street address. All delivery address fields are required.
+                      </p>
+                      {addressFields}
+                    </div>
+                  ) : (
+                    <div className="mt-4 space-y-2">
+                      <FormField
+                        control={form.control}
+                        name="collectionPoint"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Nearest PEP Store
+                            </FormLabel>
+                            <FormControl>
+                               <Input
+                                placeholder="e.g. PEP Gardens Center"
+                                {...field}
+                              />
 
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

@@ -114,6 +114,7 @@ export const Orders: CollectionConfig = {
         options: [
             { label: 'PEP Store (7-9 days) - R60', value: 'pep_standard' },
             { label: 'PEP Store (3-5 days) - R120', value: 'pep_express' },
+            { label: 'Home Delivery (3-5 days) - R120', value: 'home_delivery' },
         ],
         required: true,
     },
@@ -121,9 +122,9 @@ export const Orders: CollectionConfig = {
         name: 'collectionPoint',
         type: 'text',
         label: 'Collection Point / Store',
-        required: true,
         admin: {
-            description: 'The specific PEP store selected by the user',
+            description: 'The specific PEP store selected by the user (PEP collection orders only)',
+            condition: (data) => data?.shippingMethod === 'pep_standard' || data?.shippingMethod === 'pep_express',
         },
     },
     {

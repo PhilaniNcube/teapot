@@ -11,6 +11,7 @@ type SendOrderEmailArgs = Parameters<CollectionAfterChangeHook<Order>>[0]
 const shippingMethodLabels: Record<Order['shippingMethod'], string> = {
   pep_standard: 'PEP Store (7-9 days) - R60',
   pep_express: 'PEP Store (3-5 days) - R120',
+  home_delivery: 'Home Delivery (3-5 days) - R120',
 }
 
 async function buildOrderEmailData(
@@ -72,7 +73,7 @@ async function buildOrderEmailData(
     customerEmail: order.customerDetails.email,
     customerPhone: order.customerDetails.phone,
     shippingMethodLabel: shippingMethodLabels[order.shippingMethod],
-    collectionPoint: order.collectionPoint,
+    collectionPoint: order.collectionPoint || undefined,
     shippingCost: order.shippingCost,
     total: order.total,
     addressLines: addressLines.length > 0 ? addressLines : undefined,

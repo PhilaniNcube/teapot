@@ -23,7 +23,7 @@ export type OrderEmailData = {
   customerEmail: string
   customerPhone: string
   shippingMethodLabel: string
-  collectionPoint: string
+  collectionPoint?: string
   shippingCost: number
   total: number
   addressLines?: string[]
@@ -103,9 +103,11 @@ export function OrderEmailLayout({
             <Text style={detailLine}>
               <strong>Order number:</strong> {formatOrderId(order.orderId)}
             </Text>
-            <Text style={detailLine}>
-              <strong>Collection point:</strong> {order.collectionPoint}
-            </Text>
+            {order.collectionPoint ? (
+              <Text style={detailLine}>
+                <strong>Collection point:</strong> {order.collectionPoint}
+              </Text>
+            ) : null}
             <Text style={detailLine}>
               <strong>Shipping method:</strong> {order.shippingMethodLabel}
             </Text>

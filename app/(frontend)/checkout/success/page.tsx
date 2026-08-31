@@ -7,6 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle2, MapPin, Package, Loader2 } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 
+const shippingMethodLabels = {
+  pep_standard: 'PEP Standard (7-9 days)',
+  pep_express: 'PEP Express (3-5 days)',
+  home_delivery: 'Home Delivery (3-5 days)',
+} as const
+
 interface SuccessPageProps {
   searchParams: Promise<{
     orderId?: string
@@ -72,11 +78,22 @@ async function SuccessContent({ searchParams }: SuccessPageProps) {
 
               <div>
                 <p className="text-muted-foreground font-medium mb-1 flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5" /> PEP Collection Store
+                  <MapPin className="h-3.5 w-3.5" />{' '}
+                  {order.shippingMethod === 'home_delivery' ? 'Delivery Address' : 'PEP Collection Store'}
                 </p>
-                <p className="font-semibold">{order.collectionPoint}</p>
+                {order.shippingMethod === 'home_delivery' ? (
+                  <div className="font-semibold">
+                    <p>{order.customerDetails.address}</p>
+                    <p className="font-normal">
+                      {[order.customerDetails.city, order.customerDetails.province].filter(Boolean).join(', ')}
+                    </p>
+                    <p className="font-normal">{order.customerDetails.postalCode}</p>
+                  </div>
+                ) : (
+                  <p className="font-semibold">{order.collectionPoint}</p>
+                )}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Method: {order.shippingMethod === 'pep_express' ? 'PEP Express (3-5 days)' : 'PEP Standard (7-9 days)'}
+                  Method: {shippingMethodLabels[order.shippingMethod]}
                 </p>
               </div>
             </div>

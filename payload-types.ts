@@ -348,11 +348,11 @@ export interface Order {
    */
   payfastPaymentId?: string | null;
   paidAt?: string | null;
-  shippingMethod: 'pep_standard' | 'pep_express';
+  shippingMethod: 'pep_standard' | 'pep_express' | 'home_delivery';
   /**
-   * The specific PEP store selected by the user
+   * The specific PEP store selected by the user (PEP collection orders only)
    */
-  collectionPoint: string;
+  collectionPoint?: string | null;
   shippingCost: number;
   customerDetails: {
     firstName: string;
